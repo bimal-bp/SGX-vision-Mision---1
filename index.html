@@ -139,7 +139,7 @@
 <body class="font-sans antialiased">
     <div class="container mx-auto p-8">
         <!-- Title Box -->
-        <div class="title-box text-center mb-12">
+        <div class="title-box text-center mb-12" onclick="resetButtonColors()">
             <h1 class="text-5xl font-extrabold mb-4 tracking-tight">SGX Vision Financial Year 2025-26</h1>
             <p class="text-xl">Project Head: Arun Kumar</p>
         </div>
@@ -265,7 +265,7 @@
 
         let lastActiveButton = null;
 
-        // Random color generator with clickable reset
+        // Random color generator for backgrounds and text
         function getRandomColor() {
             const colors = [
                 'linear-gradient(135deg, #ef4444, #b91c1c)', // Red
@@ -278,13 +278,29 @@
             return colors[Math.floor(Math.random() * colors.length)];
         }
 
+        function getRandomTextColor() {
+            const textColors = [
+                '#b91c1c', // Red
+                '#15803d', // Green
+                '#6d28d9', // Purple
+                '#b45309', // Amber
+                '#db2777', // Pink
+                '#0d9488'  // Teal
+            ];
+            return textColors[Math.floor(Math.random() * textColors.length)];
+        }
+
         function resetButtonColors() {
             const buttons = document.querySelectorAll('.button-box');
             buttons.forEach(button => {
                 button.classList.remove('active');
                 button.style.background = 'linear-gradient(135deg, #ffffff, #e0e7ff)';
+                button.style.color = '#1f2937'; // Reset to default text color (gray-800)
             });
             lastActiveButton = null;
+            // Change title box text color
+            const titleBox = document.querySelector('.title-box');
+            titleBox.style.color = getRandomTextColor();
         }
 
         function showContent(buttonName, button) {
@@ -310,13 +326,15 @@
             // Show back to top button
             backToTopButton.classList.add('show');
 
-            // Handle active button state with random color
+            // Handle active button state with random background and text color
             if (lastActiveButton) {
                 lastActiveButton.classList.remove('active');
                 lastActiveButton.style.background = 'linear-gradient(135deg, #ffffff, #e0e7ff)';
+                lastActiveButton.style.color = '#1f2937'; // Reset to default text color
             }
             button.classList.add('active');
             button.style.background = getRandomColor();
+            button.style.color = getRandomTextColor();
             lastActiveButton = button;
 
             // Add click event to title to reset colors
@@ -330,6 +348,7 @@
             if (lastActiveButton) {
                 lastActiveButton.classList.remove('active');
                 lastActiveButton.style.background = 'linear-gradient(135deg, #ffffff, #e0e7ff)';
+                lastActiveButton.style.color = '#1f2937'; // Reset to default text color
                 lastActiveButton = null;
             }
         }
