@@ -13,12 +13,19 @@
             transform: scale(1.05);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
+        .title-box {
+            background-color: #f3f4f6;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
     </style>
 </head>
 <body class="bg-gray-100 font-sans">
     <div class="container mx-auto p-4">
-        <!-- Title Box and Project Head -->
-        <div class="text-center mb-8">
+        <!-- Title Box -->
+        <div class="title-box text-center mb-8">
             <h1 class="text-4xl font-bold text-gray-800 mb-2">SGX Vision Financial Year 2025-26</h1>
             <p class="text-lg text-gray-600">Project Head: Arun Kumar</p>
         </div>
@@ -28,42 +35,132 @@
             <p>October 11, 2025</p>
         </div>
 
-        <!-- Clickable Buttons -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <button class="button-box bg-white p-6 rounded-lg shadow-md text-center text-xl font-semibold text-gray-700" onclick="handleClick('METSO Plant Optimization')">
+        <!-- Clickable Buttons (Vertical Layout) -->
+        <div class="grid grid-cols-1 gap-6 max-w-md mx-auto">
+            <button class="button-box bg-white p-6 rounded-lg shadow-md text-center text-xl font-semibold text-gray-700" onclick="showContent('METSO Plant Optimization')">
                 1. METSO Plant Optimization
             </button>
-            <button class="button-box bg-white p-6 rounded-lg shadow-md text-center text-xl font-semibold text-gray-700" onclick="handleClick('VSI to Rivo Conversion')">
+            <button class="button-box bg-white p-6 rounded-lg shadow-md text-center text-xl font-semibold text-gray-700" onclick="showContent('VSI to Rivo Conversion')">
                 2. VSI to Rivo Conversion
             </button>
-            <button class="button-box bg-white p-6 rounded-lg shadow-md text-center text-xl font-semibold text-gray-700" onclick="handleClick('Mining & Bench Planning')">
+            <button class="button-box bg-white p-6 rounded-lg shadow-md text-center text-xl font-semibold text-gray-700" onclick="showContent('Mining & Bench Planning')">
                 3. Mining & Bench Planning
             </button>
-            <button class="button-box bg-white p-6 rounded-lg shadow-md text-center text-xl font-semibold text-gray-700" onclick="handleClick('Drilling & Blasting Agenda')">
+            <button class="button-box bg-white p-6 rounded-lg shadow-md text-center text-xl font-semibold text-gray-700" onclick="showContent('Drilling & Blasting Agenda')">
                 4. Drilling & Blasting Agenda
             </button>
-            <button class="button-box bg-white p-6 rounded-lg shadow-md text-center text-xl font-semibold text-gray-700" onclick="handleClick('Operator Training Program')">
+            <button class="button-box bg-white p-6 rounded-lg shadow-md text-center text-xl font-semibold text-gray-700" onclick="showContent('Operator Training Program')">
                 5. Operator Training Program
             </button>
-            <button class="button-box bg-white p-6 rounded-lg shadow-md text-center text-xl font-semibold text-gray-700" onclick="handleClick('Crusher Competitor Study')">
+            <button class="button-box bg-white p-6 rounded-lg shadow-md text-center text-xl font-semibold text-gray-700" onclick="showContent('Crusher Competitor Study')">
                 6. Crusher Competitor Study
             </button>
-            <button class="button-box bg-white p-6 rounded-lg shadow-md text-center text-xl font-semibold text-gray-700" onclick="handleClick('Surveyor Appointment')">
+            <button class="button-box bg-white p-6 rounded-lg shadow-md text-center text-xl font-semibold text-gray-700" onclick="showContent('Surveyor Appointment')">
                 7. Surveyor Appointment
             </button>
-            <button class="button-box bg-white p-6 rounded-lg shadow-md text-center text-xl font-semibold text-gray-700" onclick="handleClick('Plant Operational Time')">
+            <button class="button-box bg-white p-6 rounded-lg shadow-md text-center text-xl font-semibold text-gray-700" onclick="showContent('Plant Operational Time')">
                 8. Plant Operational Time
             </button>
-            <button class="button-box bg-white p-6 rounded-lg shadow-md text-center text-xl font-semibold text-gray-700" onclick="handleClick('Alternate Access Road Plan')">
+            <button class="button-box bg-white p-6 rounded-lg shadow-md text-center text-xl font-semibold text-gray-700" onclick="showContent('Alternate Access Road Plan')">
                 9. Alternate Access Road Plan
             </button>
+        </div>
+
+        <!-- Content Display Section -->
+        <div id="content-section" class="mt-8 max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md hidden">
+            <h2 id="content-title" class="text-2xl font-bold text-gray-800 mb-4"></h2>
+            <ul id="content-points" class="list-disc list-inside text-gray-600 mb-4"></ul>
+            <div id="content-image" class="w-full h-64 bg-gray-200 flex items-center justify-center rounded-lg">
+                <p class="text-gray-500">Image Placeholder</p>
+            </div>
         </div>
     </div>
 
     <script>
-        function handleClick(buttonName) {
-            // Placeholder for button click action
-            alert(`Clicked: ${buttonName}\nYou can add text and image content for this section later.`);
+        const contentData = {
+            'METSO Plant Optimization': {
+                points: [
+                    'Enhance plant efficiency by 15% through automation.',
+                    'Reduce downtime with predictive maintenance.',
+                    'Integrate real-time monitoring systems.'
+                ]
+            },
+            'VSI to Rivo Conversion': {
+                points: [
+                    'Upgrade VSI systems to Rivo for better performance.',
+                    'Train staff on new system operations.',
+                    'Complete conversion by Q2 2026.'
+                ]
+            },
+            'Mining & Bench Planning': {
+                points: [
+                    'Optimize bench designs for higher yield.',
+                    'Implement 3D modeling for planning.',
+                    'Reduce environmental impact by 10%.'
+                ]
+            },
+            'Drilling & Blasting Agenda': {
+                points: [
+                    'Adopt eco-friendly blasting techniques.',
+                    'Improve drilling precision with new tech.',
+                    'Schedule quarterly safety audits.'
+                ]
+            },
+            'Operator Training Program': {
+                points: [
+                    'Launch comprehensive training modules.',
+                    'Certify 100 operators by year-end.',
+                    'Focus on safety and efficiency.'
+                ]
+            },
+            'Crusher Competitor Study': {
+                points: [
+                    'Analyze top 5 competitors’ crusher tech.',
+                    'Identify gaps in current crusher models.',
+                    'Propose upgrades by Q3 2026.'
+                ]
+            },
+            'Surveyor Appointment': {
+                points: [
+                    'Hire 3 experienced surveyors by Q1 2026.',
+                    'Train surveyors on latest GPS tools.',
+                    'Ensure compliance with regulations.'
+                ]
+            },
+            'Plant Operational Time': {
+                points: [
+                    'Increase uptime to 95% by Q4 2026.',
+                    'Streamline maintenance schedules.',
+                    'Monitor KPIs for performance.'
+                ]
+            },
+            'Alternate Access Road Plan': {
+                points: [
+                    'Design new access road by Q2 2026.',
+                    'Reduce transport time by 20%.',
+                    'Ensure road safety compliance.'
+                ]
+            }
+        };
+
+        function showContent(buttonName) {
+            const contentSection = document.getElementById('content-section');
+            const contentTitle = document.getElementById('content-title');
+            const contentPoints = document.getElementById('content-points');
+
+            // Update title
+            contentTitle.textContent = buttonName;
+
+            // Update points
+            contentPoints.innerHTML = '';
+            contentData[buttonName].points.forEach(point => {
+                const li = document.createElement('li');
+                li.textContent = point;
+                contentPoints.appendChild(li);
+            });
+
+            // Show content section
+            contentSection.classList.remove('hidden');
         }
     </script>
 </body>
