@@ -155,8 +155,22 @@
         .content-points li:nth-child(1) { animation-delay: 0.1s; }
         .content-points li:nth-child(2) { animation-delay: 0.2s; }
         .content-points li:nth-child(3) { animation-delay: 0.3s; }
+        .content-points li:nth-child(4) { animation-delay: 0.4s; }
+        .content-points li:nth-child(5) { animation-delay: 0.5s; }
+        .content-points li:nth-child(6) { animation-delay: 0.6s; }
+        .content-points li:nth-child(7) { animation-delay: 0.7s; }
+        .content-points li:nth-child(8) { animation-delay: 0.8s; }
         @keyframes fadeIn {
             to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Subheading styling */
+        .content-subheading {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e3a8a;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         /* Image placeholder with hover scale and glow */
@@ -165,6 +179,12 @@
             background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
             border-radius: 12px;
             border: 2px solid #93c5fd;
+            width: 100%;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1rem;
         }
         .content-image:hover {
             transform: scale(1.08);
@@ -262,10 +282,7 @@
             <div class="modal-content">
                 <span class="close-modal" onclick="closeModal()">&times;</span>
                 <h2 id="content-title" class="text-3xl font-bold text-gray-900 mb-6"></h2>
-                <ul id="content-points" class="list-disc list-inside text-gray-700 text-lg space-y-3"></ul>
-                <div id="content-image" class="w-full h-80 bg-gradient-to-r from-indigo-100 to-blue-200 flex items-center justify-center rounded-lg mt-8 content-image">
-                    <p class="text-gray-600 font-medium">Image Placeholder</p>
-                </div>
+                <div id="content-sections"></div>
             </div>
         </div>
 
@@ -276,67 +293,139 @@
     <script>
         const contentData = {
             'METSO Plant Optimization': {
-                points: [
-                    'Enhance plant efficiency by 15% through automation.',
-                    'Reduce downtime with predictive maintenance.',
-                    'Integrate real-time monitoring systems.'
+                sections: [
+                    {
+                        title: 'Internal Trial for 230 TPH including Railway Ballast Production',
+                        points: [
+                            'Jaw CSS: 96 mm',
+                            'Cone CSS: 32 mm',
+                            'Screen Top: 60 mm - 6 nos',
+                            'Screen Bottom: 42 mm - 4 nos',
+                            'Trial Results: Image will be added from GitHub'
+                        ],
+                        image: true
+                    },
+                    {
+                        title: 'New Plan',
+                        points: [
+                            'Image will be added from GitHub'
+                        ],
+                        image: true
+                    },
+                    {
+                        title: 'New Conveyor Questions',
+                        points: [
+                            'Conveyor Questions Image',
+                            'Image will be added from GitHub'
+                        ],
+                        image: true
+                    },
+                    {
+                        title: 'Project Timeline',
+                        points: [
+                            'Work Start Date: June 15, 2025',
+                            'Work End Date: September 30, 2025'
+                        ],
+                        image: false
+                    },
+                    {
+                        title: 'General Goals',
+                        points: [
+                            'Enhance plant efficiency by 15% through automation.',
+                            'Reduce downtime with predictive maintenance.',
+                            'Integrate real-time monitoring systems.'
+                        ],
+                        image: false
+                    }
                 ]
             },
             'VSI to Rivo Conversion': {
-                points: [
-                    'Upgrade VSI systems to Rivo for better performance.',
-                    'Train staff on new system operations.',
-                    'Complete conversion by Q2 2026.'
-                ]
+                sections: [{
+                    title: '',
+                    points: [
+                        'Upgrade VSI systems to Rivo for better performance.',
+                        'Train staff on new system operations.',
+                        'Complete conversion by Q2 2026.'
+                    ],
+                    image: false
+                }]
             },
             'Mining & Bench Planning': {
-                points: [
-                    'Optimize bench designs for higher yield.',
-                    'Implement 3D modeling for planning.',
-                    'Reduce environmental impact by 10%.'
-                ]
+                sections: [{
+                    title: '',
+                    points: [
+                        'Optimize bench designs for higher yield.',
+                        'Implement 3D modeling for planning.',
+                        'Reduce environmental impact by 10%.'
+                    ],
+                    image: false
+                }]
             },
             'Drilling & Blasting Agenda': {
-                points: [
-                    'Adopt eco-friendly blasting techniques.',
-                    'Improve drilling precision with new tech.',
-                    'Schedule quarterly safety audits.'
-                ]
+                sections: [{
+                    title: '',
+                    points: [
+                        'Adopt eco-friendly blasting techniques.',
+                        'Improve drilling precision with new tech.',
+                        'Schedule quarterly safety audits.'
+                    ],
+                    image: false
+                }]
             },
             'Operator Training Program': {
-                points: [
-                    'Launch comprehensive training modules.',
-                    'Certify 100 operators by year-end.',
-                    'Focus on safety and efficiency.'
-                ]
+                sections: [{
+                    title: '',
+                    points: [
+                        'Launch comprehensive training modules.',
+                        'Certify 100 operators by year-end.',
+                        'Focus on safety and efficiency.'
+                    ],
+                    image: false
+                }]
             },
             'Crusher Competitor Study': {
-                points: [
-                    'Analyze top 5 competitors’ crusher tech.',
-                    'Identify gaps in current crusher models.',
-                    'Propose upgrades by Q3 2026.'
-                ]
+                sections: [{
+                    title: '',
+                    points: [
+                        'Analyze top 5 competitors’ crusher tech.',
+                        'Identify gaps in current crusher models.',
+                        'Propose upgrades by Q3 2026.'
+                    ],
+                    image: false
+                }]
             },
             'Surveyor Appointment': {
-                points: [
-                    'Hire 3 experienced surveyors by Q1 2026.',
-                    'Train surveyors on latest GPS tools.',
-                    'Ensure compliance with regulations.'
-                ]
+                sections: [{
+                    title: '',
+                    points: [
+                        'Hire 3 experienced surveyors by Q1 2026.',
+                        'Train surveyors on latest GPS tools.',
+                        'Ensure compliance with regulations.'
+                    ],
+                    image: false
+                }]
             },
             'Plant Operational Time': {
-                points: [
-                    'Increase uptime to 95% by Q4 2026.',
-                    'Streamline maintenance schedules.',
-                    'Monitor KPIs for performance.'
-                ]
+                sections: [{
+                    title: '',
+                    points: [
+                        'Increase uptime to 95% by Q4 2026.',
+                        'Streamline maintenance schedules.',
+                        'Monitor KPIs for performance.'
+                    ],
+                    image: false
+                }]
             },
             'Alternate Access Road Plan': {
-                points: [
-                    'Design new access road by Q2 2026.',
-                    'Reduce transport time by 20%.',
-                    'Ensure road safety compliance.'
-                ]
+                sections: [{
+                    title: '',
+                    points: [
+                        'Design new access road by Q2 2026.',
+                        'Reduce transport time by 20%.',
+                        'Ensure road safety compliance.'
+                    ],
+                    image: false
+                }]
             }
         };
 
@@ -362,7 +451,7 @@
                 '#065f46', // Dark Green
                 '#9f1239'  // Dark Rose
             ];
-            return textColors[Math.floor(Math.random() * colors.length)];
+            return textColors[Math.floor(Math.random() * textColors.length)];
         }
 
         // Auto-change title box color every 5 seconds
@@ -390,18 +479,40 @@
         function showContent(buttonName, button) {
             const modal = document.getElementById('modal');
             const contentTitle = document.getElementById('content-title');
-            const contentPoints = document.getElementById('content-points');
+            const contentSections = document.getElementById('content-sections');
             const backToTopButton = document.querySelector('.back-to-top');
 
             // Update title
             contentTitle.textContent = buttonName;
 
-            // Update points with animation
-            contentPoints.innerHTML = '';
-            contentData[buttonName].points.forEach(point => {
-                const li = document.createElement('li');
-                li.textContent = point;
-                contentPoints.appendChild(li);
+            // Update sections
+            contentSections.innerHTML = '';
+            contentData[buttonName].sections.forEach(section => {
+                // Create subheading if present
+                if (section.title) {
+                    const subheading = document.createElement('h3');
+                    subheading.className = 'content-subheading';
+                    subheading.textContent = section.title;
+                    contentSections.appendChild(subheading);
+                }
+
+                // Create points list
+                const ul = document.createElement('ul');
+                ul.className = 'content-points list-disc list-inside text-gray-700 text-lg space-y-3';
+                section.points.forEach(point => {
+                    const li = document.createElement('li');
+                    li.textContent = point;
+                    ul.appendChild(li);
+                });
+                contentSections.appendChild(ul);
+
+                // Add image placeholder if specified
+                if (section.image) {
+                    const imageDiv = document.createElement('div');
+                    imageDiv.className = 'content-image';
+                    imageDiv.innerHTML = '<p class="text-gray-600 font-medium">Image Placeholder (To be added from GitHub)</p>';
+                    contentSections.appendChild(imageDiv);
+                }
             });
 
             // Show modal
