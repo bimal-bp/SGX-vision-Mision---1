@@ -6,105 +6,10 @@
     <title>SGX Vision Financial Year 2025-26</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Modern gradient for buttons and title box */
-        .gradient-bg {
-            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-            color: white;
-        }
-        .button-box {
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-            background: linear-gradient(135deg, #ffffff, #e0e7ff);
-            position: relative;
-            overflow: hidden;
-            width: 180%; /* Increased width by 80% (100% * 1.8 = 180%) */
-            max-width: 1080px; /* Optional: cap max width for larger screens */
-        }
-        .button-box:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
-        }
-        .button-box:active {
-            transform: translateY(0);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-        }
-        .button-box.active {
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
-            color: white;
-        }
-        .title-box {
-            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-            border: 2px solid #93c5fd;
-            border-radius: 16px;
-            padding: 2rem;
-            margin-bottom: 2.5rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.5s ease;
-            color: white;
-        }
-        .title-box:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-        .modal-content {
-            background: linear-gradient(135deg, #f9fafb, #e0e7ff);
-            border-radius: 16px;
-            padding: 3rem;
-            max-width: 800px;
-            width: 95%;
-            max-height: 85vh;
-            overflow-y: auto;
-            position: relative;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-            animation: slideIn 0.3s ease;
-        }
-        @keyframes slideIn {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        .close-modal {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #1e3a8a;
-        }
-        /* Smooth fade-in for content points */
-        .content-points li {
-            animation: fadeIn 0.6s ease forwards;
-            opacity: 0;
-            transform: translateY(10px);
-        }
-        .content-points li:nth-child(1) { animation-delay: 0.1s; }
-        .content-points li:nth-child(2) { animation-delay: 0.2s; }
-        .content-points li:nth-child(3) { animation-delay: 0.3s; }
-        @keyframes fadeIn {
-            to { opacity: 1; transform: translateY(0); }
-        }
-        /* Image placeholder animation */
-        .content-image {
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
-        }
-        .content-image:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-        }
-        /* Background animation */
+        /* Enhanced typography with modern fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
         body {
+            font-family: 'Inter', sans-serif;
             background: linear-gradient(45deg, #f3f4f6, #e0e7ff, #f3f4f6, #e0e7ff);
             background-size: 400%;
             animation: gradientBG 15s ease infinite;
@@ -114,25 +19,196 @@
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-        /* Back to Top Button */
+
+        /* Title box with glowing effect and subtle rotation */
+        .title-box {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            border: 3px solid #93c5fd;
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.5s ease;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        .title-box:hover {
+            transform: translateY(-8px) rotate(1deg);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+        .title-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        .title-box:hover::before {
+            left: 100%;
+        }
+
+        /* Enhanced button styles with ripple effect */
+        .button-box {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            background: linear-gradient(135deg, #ffffff, #e0e7ff);
+            position: relative;
+            overflow: hidden;
+            width: 180%;
+            max-width: 1080px;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid #dbeafe;
+        }
+        .button-box:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+        }
+        .button-box:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+        .button-box.active {
+            background: linear-gradient(135deg, #3b82f6, #1e3a8a);
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.6);
+            color: white;
+            border: 2px solid #93c5fd;
+        }
+        .button-box::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s ease, height 0.4s ease;
+            pointer-events: none;
+        }
+        .button-box:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* Modal with glassmorphism effect */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+        .modal-content {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(224, 231, 255, 0.85));
+            border-radius: 20px;
+            padding: 3.5rem;
+            max-width: 900px;
+            width: 95%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: slideIn 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-60px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .close-modal {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #1e3a8a;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .close-modal:hover {
+            transform: rotate(90deg);
+            color: #3b82f6;
+        }
+
+        /* Enhanced content points animation */
+        .content-points li {
+            animation: fadeIn 0.6s ease forwards;
+            opacity: 0;
+            transform: translateX(-20px);
+            padding: 0.75rem;
+            border-left: 4px solid #3b82f6;
+            margin-bottom: 0.5rem;
+        }
+        .content-points li:nth-child(1) { animation-delay: 0.1s; }
+        .content-points li:nth-child(2) { animation-delay: 0.2s; }
+        .content-points li:nth-child(3) { animation-delay: 0.3s; }
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Image placeholder with hover scale and glow */
+        .content-image {
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            border-radius: 12px;
+            border: 2px solid #93c5fd;
+        }
+        .content-image:hover {
+            transform: scale(1.08);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Back to Top Button with pulse animation */
         .back-to-top {
             position: fixed;
-            bottom: 2rem;
-            right: 2rem;
+            bottom: 2.5rem;
+            right: 2.5rem;
             background: linear-gradient(135deg, #3b82f6, #1e3a8a);
             color: white;
-            padding: 0.75rem 1.5rem;
+            padding: 1rem 2rem;
             border-radius: 50px;
-            font-weight: bold;
-            transition: transform 0.3s ease, opacity 0.3s ease;
+            font-weight: 600;
+            transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
             opacity: 0;
             pointer-events: none;
+            animation: pulse 2s infinite;
         }
         .back-to-top.show {
             opacity: 1;
             pointer-events: auto;
         }
         .back-to-top:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Date styling in top right */
+        .date-box {
+            background: linear-gradient(135deg, #ffffff, #e0e7ff);
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .date-box:hover {
             transform: translateY(-4px);
         }
     </style>
@@ -142,11 +218,11 @@
         <!-- Title Box -->
         <div class="title-box text-center mb-12" onclick="resetButtonColors()">
             <h1 class="text-5xl font-extrabold mb-4 tracking-tight">SGX Vision Financial Year 2025-26</h1>
-            <p class="text-xl">Project Head: Arun Kumar</p>
+            <p class="text-xl font-medium">Project Head: Arun Kumar</p>
         </div>
 
         <!-- Date in Top Right Corner -->
-        <div class="absolute top-4 right-4 text-gray-700 font-medium">
+        <div class="date-box absolute top-4 right-4 text-gray-700 font-medium">
             <p>October 11, 2025</p>
         </div>
 
@@ -286,7 +362,7 @@
                 '#065f46', // Dark Green
                 '#9f1239'  // Dark Rose
             ];
-            return textColors[Math.floor(Math.random() * textColors.length)];
+            return textColors[Math.floor(Math.random() * colors.length)];
         }
 
         // Auto-change title box color every 5 seconds
