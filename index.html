@@ -16,7 +16,7 @@
             background: linear-gradient(135deg, #ffffff, #e0e7ff);
             position: relative;
             overflow: hidden;
-            width: 150%;
+            width: 100%; /* Changed from 150% to 100% for center alignment */
         }
         .button-box:hover {
             transform: translateY(-6px);
@@ -37,7 +37,7 @@
             border-radius: 16px;
             padding: 2rem;
             margin-bottom: 2.5rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.5s ease;
             color: white;
         }
         .title-box:hover {
@@ -60,10 +60,10 @@
         .modal-content {
             background: linear-gradient(135deg, #f9fafb, #e0e7ff);
             border-radius: 16px;
-            padding: 2rem;
-            max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
+            padding: 3rem; /* Increased padding */
+            max-width: 800px; /* Increased max-width for larger modal */
+            width: 95%; /* Slightly wider */
+            max-height: 85vh; /* Slightly taller */
             overflow-y: auto;
             position: relative;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
@@ -149,8 +149,8 @@
             <p>October 11, 2025</p>
         </div>
 
-        <!-- Clickable Buttons (Vertical Layout) -->
-        <div class="grid grid-cols-1 gap-8 max-w-3xl mx-auto">
+        <!-- Clickable Buttons (Vertical Layout, Centered) -->
+        <div class="flex flex-col items-center gap-8 max-w-3xl mx-auto">
             <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('METSO Plant Optimization', this)">
                 1. METSO Plant Optimization
             </button>
@@ -265,27 +265,25 @@
 
         let lastActiveButton = null;
 
-        // Random color generator for backgrounds and text
-        function getRandomColor() {
+        // Random light color generator for title box
+        function getRandomLightColor() {
             const colors = [
-                'linear-gradient(135deg, #ef4444, #b91c1c)', // Red
-                'linear-gradient(135deg, #22c55e, #15803d)', // Green
-                'linear-gradient(135deg, #8b5cf6, #6d28d9)', // Purple
-                'linear-gradient(135deg, #f59e0b, #b45309)', // Amber
-                'linear-gradient(135deg, #ec4899, #db2777)', // Pink
-                'linear-gradient(135deg, #14b8a6, #0d9488)'  // Teal
+                'linear-gradient(135deg, #60a5fa, #3b82f6)', // Light Blue
+                'linear-gradient(135deg, #a5b4fc, #818cf8)', // Light Indigo
+                'linear-gradient(135deg, #f9a8d4, #ec4899)', // Light Pink
+                'linear-gradient(135deg, #6ee7b7, #34d399)', // Light Green
+                'linear-gradient(135deg, #fbcfe8, #f472b6)'  // Light Rose
             ];
             return colors[Math.floor(Math.random() * colors.length)];
         }
 
         function getRandomTextColor() {
             const textColors = [
-                '#b91c1c', // Red
-                '#15803d', // Green
-                '#6d28d9', // Purple
-                '#b45309', // Amber
-                '#db2777', // Pink
-                '#0d9488'  // Teal
+                '#1e3a8a', // Dark Blue
+                '#3730a3', // Dark Indigo
+                '#831843', // Dark Pink
+                '#065f46', // Dark Green
+                '#9f1239'  // Dark Rose
             ];
             return textColors[Math.floor(Math.random() * textColors.length)];
         }
@@ -295,11 +293,12 @@
             buttons.forEach(button => {
                 button.classList.remove('active');
                 button.style.background = 'linear-gradient(135deg, #ffffff, #e0e7ff)';
-                button.style.color = '#1f2937'; // Reset to default text color (gray-800)
+                button.style.color = '#1f2937';
             });
             lastActiveButton = null;
-            // Change title box text color
+            // Change title box background and text color
             const titleBox = document.querySelector('.title-box');
+            titleBox.style.background = getRandomLightColor();
             titleBox.style.color = getRandomTextColor();
         }
 
@@ -330,16 +329,12 @@
             if (lastActiveButton) {
                 lastActiveButton.classList.remove('active');
                 lastActiveButton.style.background = 'linear-gradient(135deg, #ffffff, #e0e7ff)';
-                lastActiveButton.style.color = '#1f2937'; // Reset to default text color
+                lastActiveButton.style.color = '#1f2937';
             }
             button.classList.add('active');
-            button.style.background = getRandomColor();
+            button.style.background = getRandomLightColor();
             button.style.color = getRandomTextColor();
             lastActiveButton = button;
-
-            // Add click event to title to reset colors
-            const titleBox = document.querySelector('.title-box');
-            titleBox.onclick = resetButtonColors;
         }
 
         function closeModal() {
@@ -348,7 +343,7 @@
             if (lastActiveButton) {
                 lastActiveButton.classList.remove('active');
                 lastActiveButton.style.background = 'linear-gradient(135deg, #ffffff, #e0e7ff)';
-                lastActiveButton.style.color = '#1f2937'; // Reset to default text color
+                lastActiveButton.style.color = '#1f2937';
                 lastActiveButton = null;
             }
         }
