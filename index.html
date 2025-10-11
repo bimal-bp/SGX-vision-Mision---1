@@ -6,77 +6,117 @@
     <title>SGX Vision Financial Year 2025-26</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* Custom gradient for buttons and title box */
+        .gradient-bg {
+            background: linear-gradient(135deg, #6b7280, #3b82f6);
+            color: white;
+        }
         .button-box {
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            background: linear-gradient(135deg, #ffffff, #f3f4f6);
         }
         .button-box:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+        }
+        .button-box:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
         .title-box {
-            background-color: #f3f4f6;
+            background: linear-gradient(135deg, #f3f4f6, #ffffff);
             border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            transition: background-color 0.3s, transform 0.2s;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .title-box:hover {
-            background-color: #e5e7eb;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        .content-section {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .content-section.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .content-section.hidden {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        /* Smooth fade-in for content points */
+        .content-points li {
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+        .content-points li:nth-child(1) { animation-delay: 0.1s; }
+        .content-points li:nth-child(2) { animation-delay: 0.2s; }
+        .content-points li:nth-child(3) { animation-delay: 0.3s; }
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Image placeholder animation */
+        .content-image {
+            transition: transform 0.3s ease;
+        }
+        .content-image:hover {
             transform: scale(1.02);
         }
     </style>
 </head>
-<body class="bg-gray-100 font-sans">
-    <div class="container mx-auto p-4">
+<body class="bg-gray-50 font-sans antialiased">
+    <div class="container mx-auto p-6">
         <!-- Title Box -->
-        <div class="title-box text-center mb-8">
-            <h1 class="text-4xl font-bold text-gray-800 mb-2">SGX Vision Financial Year 2025-26</h1>
-            <p class="text-lg text-gray-600">Project Head: Arun Kumar</p>
+        <div class="title-box text-center mb-10">
+            <h1 class="text-5xl font-extrabold text-gray-900 mb-3 tracking-tight">SGX Vision Financial Year 2025-26</h1>
+            <p class="text-xl text-gray-700">Project Head: Arun Kumar</p>
         </div>
 
         <!-- Date in Top Right Corner -->
-        <div class="absolute top-4 right-4 text-gray-600">
+        <div class="absolute top-4 right-4 text-gray-700 font-medium">
             <p>October 11, 2025</p>
         </div>
 
         <!-- Clickable Buttons (Vertical Layout) -->
-        <div class="grid grid-cols-1 gap-6 max-w-2xl mx-auto">
-            <button class="button-box bg-white p-6 rounded-lg shadow-md text-center text-xl font-semibold text-gray-700" onclick="showContent('METSO Plant Optimization')">
+        <div class="grid grid-cols-1 gap-6 max-w-3xl mx-auto">
+            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('METSO Plant Optimization')">
                 1. METSO Plant Optimization
             </button>
-            <button class="button-box bg-white p-6 rounded-lg shadow-md text-center text-xl font-semibold text-gray-700" onclick="showContent('VSI to Rivo Conversion')">
+            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('VSI to Rivo Conversion')">
                 2. VSI to Rivo Conversion
             </button>
-            <button class="button-box bg-white p-6 rounded-lg shadow-md text-center text-xl font-semibold text-gray-700" onclick="showContent('Mining & Bench Planning')">
+            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('Mining & Bench Planning')">
                 3. Mining & Bench Planning
             </button>
-            <button class="button-box bg-white p-6 rounded-lg shadow-md text-center text-xl font-semibold text-gray-700" onclick="showContent('Drilling & Blasting Agenda')">
+            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('Drilling & Blasting Agenda')">
                 4. Drilling & Blasting Agenda
             </button>
-            <button class="button-box bg-white p-6 rounded-lg shadow-md text-center text-xl font-semibold text-gray-700" onclick="showContent('Operator Training Program')">
+            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('Operator Training Program')">
                 5. Operator Training Program
             </button>
-            <button class="button-box bg-white p-6 rounded-lg shadow-md text-center text-xl font-semibold text-gray-700" onclick="showContent('Crusher Competitor Study')">
+            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('Crusher Competitor Study')">
                 6. Crusher Competitor Study
             </button>
-            <button class="button-box bg-white p-6 rounded-lg shadow-md text-center text-xl font-semibold text-gray-700" onclick="showContent('Surveyor Appointment')">
+            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('Surveyor Appointment')">
                 7. Surveyor Appointment
             </button>
-            <button class="button-box bg-white p-6 rounded-lg shadow-md text-center text-xl font-semibold text-gray-700" onclick="showContent('Plant Operational Time')">
+            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('Plant Operational Time')">
                 8. Plant Operational Time
             </button>
-            <button class="button-box bg-white p-6 rounded-lg shadow-md text-center text-xl font-semibold text-gray-700" onclick="showContent('Alternate Access Road Plan')">
+            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('Alternate Access Road Plan')">
                 9. Alternate Access Road Plan
             </button>
         </div>
 
         <!-- Content Display Section -->
-        <div id="content-section" class="mt-8 max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md hidden">
-            <h2 id="content-title" class="text-2xl font-bold text-gray-800 mb-4"></h2>
-            <ul id="content-points" class="list-disc list-inside text-gray-600 mb-4"></ul>
-            <div id="content-image" class="w-full h-64 bg-gray-200 flex items-center justify-center rounded-lg">
-                <p class="text-gray-500">Image Placeholder</p>
+        <div id="content-section" class="mt-10 max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-lg content-section hidden">
+            <h2 id="content-title" class="text-3xl font-bold text-gray-900 mb-6"></h2>
+            <ul id="content-points" class="list-disc list-inside text-gray-700 text-lg space-y-2"></ul>
+            <div id="content-image" class="w-full h-72 bg-gradient-to-r from-gray-200 to-gray-300 flex items-center justify-center rounded-lg mt-6 content-image">
+                <p class="text-gray-600 font-medium">Image Placeholder</p>
             </div>
         </div>
     </div>
@@ -156,7 +196,7 @@
             // Update title
             contentTitle.textContent = buttonName;
 
-            // Update points
+            // Update points with animation
             contentPoints.innerHTML = '';
             contentData[buttonName].points.forEach(point => {
                 const li = document.createElement('li');
@@ -164,8 +204,9 @@
                 contentPoints.appendChild(li);
             });
 
-            // Show content section
+            // Show content section with animation
             contentSection.classList.remove('hidden');
+            contentSection.classList.add('show');
         }
     </script>
 </body>
