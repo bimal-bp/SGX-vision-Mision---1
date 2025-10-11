@@ -6,38 +6,48 @@
     <title>SGX Vision Financial Year 2025-26</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Custom gradient for buttons and title box */
+        /* Modern gradient for buttons and title box */
         .gradient-bg {
-            background: linear-gradient(135deg, #6b7280, #3b82f6);
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
             color: white;
         }
         .button-box {
             transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-            background: linear-gradient(135deg, #ffffff, #f3f4f6);
+            background: linear-gradient(135deg, #ffffff, #e0e7ff);
+            position: relative;
+            overflow: hidden;
         }
         .button-box:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+            transform: translateY(-6px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
         }
         .button-box:active {
             transform: translateY(0);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+        .button-box.active {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+            background: linear-gradient(135deg, #3b82f6, #1e3a8a);
+            color: white;
         }
         .title-box {
-            background: linear-gradient(135deg, #f3f4f6, #ffffff);
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            border: 2px solid #93c5fd;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: white;
         }
         .title-box:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-6px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
         .content-section {
-            transition: opacity 0.3s ease, transform 0.3s ease;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            background: linear-gradient(135deg, #f9fafb, #e0e7ff);
+            border-radius: 16px;
         }
         .content-section.show {
             opacity: 1;
@@ -45,12 +55,13 @@
         }
         .content-section.hidden {
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(30px);
         }
         /* Smooth fade-in for content points */
         .content-points li {
-            animation: fadeIn 0.5s ease forwards;
+            animation: fadeIn 0.6s ease forwards;
             opacity: 0;
+            transform: translateY(10px);
         }
         .content-points li:nth-child(1) { animation-delay: 0.1s; }
         .content-points li:nth-child(2) { animation-delay: 0.2s; }
@@ -60,19 +71,53 @@
         }
         /* Image placeholder animation */
         .content-image {
-            transition: transform 0.3s ease;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
         }
         .content-image:hover {
-            transform: scale(1.02);
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        /* Background animation */
+        body {
+            background: linear-gradient(45deg, #f3f4f6, #e0e7ff, #f3f4f6, #e0e7ff);
+            background-size: 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, #3b82f6, #1e3a8a);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .back-to-top.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .back-to-top:hover {
+            transform: translateY(-4px);
         }
     </style>
 </head>
-<body class="bg-gray-50 font-sans antialiased">
-    <div class="container mx-auto p-6">
+<body class="font-sans antialiased">
+    <div class="container mx-auto p-8">
         <!-- Title Box -->
-        <div class="title-box text-center mb-10">
-            <h1 class="text-5xl font-extrabold text-gray-900 mb-3 tracking-tight">SGX Vision Financial Year 2025-26</h1>
-            <p class="text-xl text-gray-700">Project Head: Arun Kumar</p>
+        <div class="title-box text-center mb-12">
+            <h1 class="text-5xl font-extrabold mb-4 tracking-tight">SGX Vision Financial Year 2025-26</h1>
+            <p class="text-xl">Project Head: Arun Kumar</p>
         </div>
 
         <!-- Date in Top Right Corner -->
@@ -81,44 +126,47 @@
         </div>
 
         <!-- Clickable Buttons (Vertical Layout) -->
-        <div class="grid grid-cols-1 gap-6 max-w-3xl mx-auto">
-            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('METSO Plant Optimization')">
+        <div class="grid grid-cols-1 gap-8 max-w-3xl mx-auto">
+            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('METSO Plant Optimization', this)">
                 1. METSO Plant Optimization
             </button>
-            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('VSI to Rivo Conversion')">
+            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('VSI to Rivo Conversion', this)">
                 2. VSI to Rivo Conversion
             </button>
-            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('Mining & Bench Planning')">
+            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('Mining & Bench Planning', this)">
                 3. Mining & Bench Planning
             </button>
-            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('Drilling & Blasting Agenda')">
+            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('Drilling & Blasting Agenda', this)">
                 4. Drilling & Blasting Agenda
             </button>
-            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('Operator Training Program')">
+            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('Operator Training Program', this)">
                 5. Operator Training Program
             </button>
-            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('Crusher Competitor Study')">
+            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('Crusher Competitor Study', this)">
                 6. Crusher Competitor Study
             </button>
-            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('Surveyor Appointment')">
+            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('Surveyor Appointment', this)">
                 7. Surveyor Appointment
             </button>
-            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('Plant Operational Time')">
+            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('Plant Operational Time', this)">
                 8. Plant Operational Time
             </button>
-            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('Alternate Access Road Plan')">
+            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('Alternate Access Road Plan', this)">
                 9. Alternate Access Road Plan
             </button>
         </div>
 
         <!-- Content Display Section -->
-        <div id="content-section" class="mt-10 max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-lg content-section hidden">
+        <div id="content-section" class="mt-12 max-w-3xl mx-auto bg-white p-10 rounded-xl shadow-lg content-section hidden">
             <h2 id="content-title" class="text-3xl font-bold text-gray-900 mb-6"></h2>
-            <ul id="content-points" class="list-disc list-inside text-gray-700 text-lg space-y-2"></ul>
-            <div id="content-image" class="w-full h-72 bg-gradient-to-r from-gray-200 to-gray-300 flex items-center justify-center rounded-lg mt-6 content-image">
+            <ul id="content-points" class="list-disc list-inside text-gray-700 text-lg space-y-3"></ul>
+            <div id="content-image" class="w-full h-80 bg-gradient-to-r from-indigo-100 to-blue-200 flex items-center justify-center rounded-lg mt-8 content-image">
                 <p class="text-gray-600 font-medium">Image Placeholder</p>
             </div>
         </div>
+
+        <!-- Back to Top Button -->
+        <button class="back-to-top" onclick="scrollToTop()">Back to Top</button>
     </div>
 
     <script>
@@ -188,10 +236,13 @@
             }
         };
 
-        function showContent(buttonName) {
+        let lastActiveButton = null;
+
+        function showContent(buttonName, button) {
             const contentSection = document.getElementById('content-section');
             const contentTitle = document.getElementById('content-title');
             const contentPoints = document.getElementById('content-points');
+            const backToTopButton = document.querySelector('.back-to-top');
 
             // Update title
             contentTitle.textContent = buttonName;
@@ -207,7 +258,31 @@
             // Show content section with animation
             contentSection.classList.remove('hidden');
             contentSection.classList.add('show');
+
+            // Show back to top button
+            backToTopButton.classList.add('show');
+
+            // Handle active button state
+            if (lastActiveButton) {
+                lastActiveButton.classList.remove('active');
+            }
+            button.classList.add('active');
+            lastActiveButton = button;
         }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Show back to top button when scrolling
+        window.addEventListener('scroll', () => {
+            const backToTopButton = document.querySelector('.back-to-top');
+            if (window.scrollY > 300) {
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        });
     </script>
 </body>
 </html>
