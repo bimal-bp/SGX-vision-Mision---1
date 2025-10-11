@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SGX Vision FY 2025-26 - Mr. N. Arun Kumar</title>
+    <title>SGX Vision FY 2025-26 - Scope of Work</title>
     <style>
         * {
             margin: 0;
@@ -13,408 +13,357 @@
         }
         
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #333;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             padding: 20px;
         }
         
         .container {
+            width: 90%;
             max-width: 1200px;
-            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            margin: 20px 0;
         }
         
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            padding: 20px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        .slide {
+            display: none;
+            padding: 40px;
+            min-height: 600px;
         }
         
-        .title-section h1 {
-            color: #2c3e50;
-            font-size: 28px;
-            margin-bottom: 5px;
+        .active {
+            display: block;
         }
         
-        .title-section .date {
-            color: #7f8c8d;
-            font-size: 16px;
-        }
-        
-        .profile-section {
-            text-align: right;
-        }
-        
-        .profile-name {
-            font-size: 22px;
-            font-weight: 600;
-            color: #3498db;
-            margin-bottom: 5px;
-        }
-        
-        .profile-title {
-            color: #7f8c8d;
-            font-size: 14px;
-        }
-        
-        .dashboard {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 20px;
-        }
-        
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-        }
-        
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        h1 {
+            color: #1a2a6c;
+            font-size: 2.8rem;
             margin-bottom: 15px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
         
-        .card-number {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        h2 {
+            color: #b21f1f;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        h3 {
+            color: #1a2a6c;
+            font-size: 1.5rem;
+            margin: 25px 0 15px;
+            border-bottom: 2px solid #fdbb2d;
+            padding-bottom: 8px;
+        }
+        
+        .vision-btn {
+            display: block;
+            width: 300px;
+            margin: 30px auto;
+            padding: 15px 30px;
+            background: linear-gradient(to right, #1a2a6c, #b21f1f);
             color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.3rem;
             font-weight: bold;
-            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
-        .card-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #2c3e50;
-            line-height: 1.4;
+        .vision-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(to right, #b21f1f, #1a2a6c);
+        }
+        
+        .columns {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .column {
             flex: 1;
-            margin-left: 15px;
         }
         
-        .card-content {
-            color: #5d6d7e;
-            line-height: 1.5;
-            margin-bottom: 20px;
-            flex: 1;
+        .agenda-item {
+            background-color: #f8f9fa;
+            border-left: 5px solid #1a2a6c;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
         }
         
-        .card-footer {
+        .agenda-item:hover {
+            transform: translateX(5px);
+            background-color: #e9ecef;
+            border-left-color: #fdbb2d;
+        }
+        
+        .agenda-item.active {
+            background-color: #1a2a6c;
+            color: white;
+            border-left-color: #fdbb2d;
+        }
+        
+        .agenda-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .agenda-desc {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .agenda-item.active .agenda-desc {
+            color: #e0e0e0;
+        }
+        
+        .detail-content {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-buttons {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-top: auto;
+            margin-top: 30px;
         }
         
-        .timeline {
-            font-size: 14px;
-            color: #7f8c8d;
-        }
-        
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .btn {
-            padding: 8px 15px;
-            border-radius: 6px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 13px;
-        }
-        
-        .btn-primary {
-            background-color: #3498db;
+        .nav-btn {
+            padding: 10px 25px;
+            background-color: #1a2a6c;
             color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
         
-        .btn-secondary {
-            background-color: #ecf0f1;
-            color: #2c3e50;
+        .nav-btn:hover {
+            background-color: #b21f1f;
+            transform: translateY(-3px);
         }
         
-        .btn:hover {
-            opacity: 0.9;
-            transform: scale(1.05);
+        .presenter {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #1a2a6c;
+            margin-top: 10px;
+            font-weight: bold;
         }
         
-        .image-placeholder {
-            height: 120px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            margin-top: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #7f8c8d;
-            font-size: 14px;
-        }
-        
-        .text-placeholder {
-            height: 80px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            margin-top: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #7f8c8d;
-            font-size: 14px;
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: white;
+            font-size: 0.9rem;
         }
         
         @media (max-width: 768px) {
-            .dashboard {
-                grid-template-columns: 1fr;
-            }
-            
-            header {
+            .columns {
                 flex-direction: column;
-                text-align: center;
             }
             
-            .profile-section {
-                text-align: center;
-                margin-top: 15px;
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.6rem;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <div class="title-section">
-                <h1>SGX Vision Financial Year 2025-26</h1>
-                <div class="date">Scope of Work Agenda</div>
-            </div>
-            <div class="profile-section">
-                <div class="profile-name">Mr. N. Arun Kumar</div>
-                <div class="profile-title">Project Lead</div>
-            </div>
-        </header>
+        <!-- Title Slide -->
+        <div class="slide active" id="slide1">
+            <h1>SGX Vision Financial Year 2025-26</h1>
+            <h2>Strategic Operational Agenda</h2>
+            <div class="presenter">Scope of Work - Mr. N. Arun Kumar</div>
+            <button class="vision-btn" onclick="showSlide(2)">VISION & ACTION</button>
+        </div>
         
-        <div class="dashboard">
-            <!-- Card 1 -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-number" style="background-color: #e74c3c;">1</div>
-                    <div class="card-title">METSO Plant Setting to achieve 230 TPH including Railway Ballast</div>
+        <!-- Agenda Slide -->
+        <div class="slide" id="slide2">
+            <h2>Operational Responsibilities & Key Focus Areas</h2>
+            
+            <div class="columns">
+                <div class="column">
+                    <div class="agenda-item" onclick="showDetail(1)">
+                        <div class="agenda-title">1. METSO Plant Optimization</div>
+                        <div class="agenda-desc">Achieve 230 TPH including Railway Ballast</div>
+                    </div>
+                    
+                    <div class="agenda-item" onclick="showDetail(2)">
+                        <div class="agenda-title">2. VSI to Rivo Conversion</div>
+                        <div class="agenda-desc">Convert 100% VSI to Rivo Product</div>
+                    </div>
+                    
+                    <div class="agenda-item" onclick="showDetail(3)">
+                        <div class="agenda-title">3. Mining & Bench Planning</div>
+                        <div class="agenda-desc">Proper planning with Mr. Siva Prasad for bench development</div>
+                    </div>
+                    
+                    <div class="agenda-item" onclick="showDetail(4)">
+                        <div class="agenda-title">4. Drilling & Blasting Agenda</div>
+                        <div class="agenda-desc">Achieve 1000 holes per day with 5.5FL depth</div>
+                    </div>
+                    
+                    <div class="agenda-item" onclick="showDetail(5)">
+                        <div class="agenda-title">5. Operator Training Program</div>
+                        <div class="agenda-desc">Training on breaking pattern to optimize costs</div>
+                    </div>
                 </div>
-                <div class="card-content">
-                    Setting up METSO plant operations to achieve 230 Tons Per Hour production capacity, including railway ballast production.
-                </div>
-                <div class="image-placeholder">Image Placeholder</div>
-                <div class="card-footer">
-                    <div class="timeline">HO Timeline: 10/10/2025</div>
-                    <div class="action-buttons">
-                        <button class="btn btn-primary">View Details</button>
-                        <button class="btn btn-secondary">Update</button>
+                
+                <div class="column">
+                    <div class="agenda-item" onclick="showDetail(6)">
+                        <div class="agenda-title">6. Crusher Competitor Study</div>
+                        <div class="agenda-desc">Analyze competitors' crushers and operations</div>
+                    </div>
+                    
+                    <div class="agenda-item" onclick="showDetail(7)">
+                        <div class="agenda-title">7. Surveyor Appointment</div>
+                        <div class="agenda-desc">Measure boulder production, mine development, plant stock</div>
+                    </div>
+                    
+                    <div class="agenda-item" onclick="showDetail(8)">
+                        <div class="agenda-title">8. Plant Operational Time</div>
+                        <div class="agenda-desc">Define operational time for 18hrs/day operations</div>
+                    </div>
+                    
+                    <div class="agenda-item" onclick="showDetail(9)">
+                        <div class="agenda-title">9. Alternate Access Road Plan</div>
+                        <div class="agenda-desc">Planning for alternate access road for tippers</div>
                     </div>
                 </div>
             </div>
             
-            <!-- Card 2 -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-number" style="background-color: #3498db;">2</div>
-                    <div class="card-title">Conversion of 100% VSI to Rivo Product</div>
-                </div>
-                <div class="card-content">
-                    Complete conversion of VSI operations to Rivo product line for improved efficiency and output.
-                </div>
-                <div class="text-placeholder">Text Content Placeholder</div>
-                <div class="card-footer">
-                    <div class="timeline">HO Timeline: 30/10/2025</div>
-                    <div class="action-buttons">
-                        <button class="btn btn-primary">View Details</button>
-                        <button class="btn btn-secondary">Update</button>
-                    </div>
-                </div>
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="showSlide(1)">Previous</button>
+                <button class="nav-btn" onclick="showSlide(3)">Next</button>
+            </div>
+        </div>
+        
+        <!-- Detail Slide -->
+        <div class="slide" id="slide3">
+            <h2 id="detail-title">Responsibility Details</h2>
+            
+            <div class="detail-content" id="detail-content">
+                <p>Select an agenda item to view details</p>
             </div>
             
-            <!-- Card 3 -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-number" style="background-color: #2ecc71;">3</div>
-                    <div class="card-title">Mining Operation Drilling & Blasting Planning with Mr. Siva Prasad</div>
-                </div>
-                <div class="card-content">
-                    Critical mining operation planning for drilling & blasting with focus on bench development for timely availability.
-                </div>
-                <div class="card-footer">
-                    <div class="timeline">HO Timeline: 12/10/2025</div>
-                    <div class="action-buttons">
-                        <button class="btn btn-primary">View Details</button>
-                        <button class="btn btn-secondary">Update</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Card 4 -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-number" style="background-color: #f39c12;">4</div>
-                    <div class="card-title">D&B Agenda: 1000 Holes per Day with 5.5FL Depth</div>
-                </div>
-                <div class="card-content">
-                    Achieve 1000 holes per day with 5.5FL depth and 90% output (5 MT per hole). Study to reduce breaking costs.
-                </div>
-                <div class="image-placeholder">Image Placeholder</div>
-                <div class="card-footer">
-                    <div class="timeline">HO Timeline: 12/10/2025</div>
-                    <div class="action-buttons">
-                        <button class="btn btn-primary">View Details</button>
-                        <button class="btn btn-secondary">Update</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Card 5 -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-number" style="background-color: #9b59b6;">5</div>
-                    <div class="card-title">Operator Training on Breaking Pattern</div>
-                </div>
-                <div class="card-content">
-                    Training operators on breaking patterns to avoid unnecessary reduction of boulder sizes and control costs.
-                </div>
-                <div class="text-placeholder">Text Content Placeholder</div>
-                <div class="card-footer">
-                    <div class="timeline">HO Timeline: 12/10/2025</div>
-                    <div class="action-buttons">
-                        <button class="btn btn-primary">View Details</button>
-                        <button class="btn btn-secondary">Update</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Card 6 -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-number" style="background-color: #1abc9c;">6</div>
-                    <div class="card-title">Crusher Competitor's Study</div>
-                </div>
-                <div class="card-content">
-                    Comprehensive study of competitor crushers including capacity, stages, plant make, location and logistics costs.
-                </div>
-                <div class="card-footer">
-                    <div class="timeline">Study in Progress</div>
-                    <div class="action-buttons">
-                        <button class="btn btn-primary">View Details</button>
-                        <button class="btn btn-secondary">Update</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Card 7 -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-number" style="background-color: #d35400;">7</div>
-                    <div class="card-title">Appoint Surveyor for Boulder Production Measurement</div>
-                </div>
-                <div class="card-content">
-                    Appoint surveyor to measure boulder production, mine development, and plant stock for accurate tracking.
-                </div>
-                <div class="image-placeholder">Image Placeholder</div>
-                <div class="card-footer">
-                    <div class="timeline">HO Timeline: 20/10/2025</div>
-                    <div class="action-buttons">
-                        <button class="btn btn-primary">View Details</button>
-                        <button class="btn btn-secondary">Update</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Card 8 -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-number" style="background-color: #34495e;">8</div>
-                    <div class="card-title">Define Plant Operational Time (18hrs/Day)</div>
-                </div>
-                <div class="card-content">
-                    Define plant operational schedule targeting 18 hours of operations per day for maximum productivity.
-                </div>
-                <div class="text-placeholder">Text Content Placeholder</div>
-                <div class="card-footer">
-                    <div class="timeline">HO Timeline: 11/10/2025</div>
-                    <div class="action-buttons">
-                        <button class="btn btn-primary">View Details</button>
-                        <button class="btn btn-secondary">Update</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Card 9 -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-number" style="background-color: #c0392b;">9</div>
-                    <div class="card-title">Planning Alternate Access Road for Tippers</div>
-                </div>
-                <div class="card-content">
-                    Develop planning for alternate access roads for tippers and identify potential bottlenecks in logistics.
-                </div>
-                <div class="card-footer">
-                    <div class="timeline">HO Timeline: 11/10/2025</div>
-                    <div class="action-buttons">
-                        <button class="btn btn-primary">View Details</button>
-                        <button class="btn btn-secondary">Update</button>
-                    </div>
-                </div>
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="showSlide(2)">Back to Agenda</button>
+                <button class="nav-btn" onclick="showSlide(1)">Back to Title</button>
             </div>
         </div>
     </div>
+    
+    <div class="footer">
+        SGX Vision Financial Year 2025-26 | Presentation for Mr. N. Arun Kumar
+    </div>
 
     <script>
-        // Add interactivity to cards and buttons
-        document.querySelectorAll('.card').forEach(card => {
-            card.addEventListener('click', function(e) {
-                // Don't trigger if clicking on buttons
-                if (!e.target.classList.contains('btn')) {
-                    const title = this.querySelector('.card-title').textContent;
-                    alert(`Opening details for: ${title}`);
+        // Show specific slide
+        function showSlide(slideNumber) {
+            // Hide all slides
+            document.querySelectorAll('.slide').forEach(slide => {
+                slide.classList.remove('active');
+            });
+            
+            // Show selected slide
+            document.getElementById('slide' + slideNumber).classList.add('active');
+            
+            // Reset all agenda items to inactive state
+            document.querySelectorAll('.agenda-item').forEach(item => {
+                item.classList.remove('active');
+            });
+        }
+        
+        // Show detail for specific agenda item
+        function showDetail(itemNumber) {
+            // Set all agenda items to inactive
+            document.querySelectorAll('.agenda-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Activate the clicked item (visual feedback)
+            event.currentTarget.classList.add('active');
+            
+            // Show the detail slide
+            showSlide(3);
+            
+            // Update detail content based on selected item
+            const detailTitle = document.getElementById('detail-title');
+            const detailContent = document.getElementById('detail-content');
+            
+            // Define content for each agenda item
+            const details = {
+                1: {
+                    title: "METSO Plant Optimization",
+                    content: "<h3>Objective</h3><p>Achieve 230 TPH production capacity including Railway Ballast.</p><h3>Key Actions</h3><ul><li>Optimize current METSO plant operations</li><li>Increase throughput to meet 230 TPH target</li><li>Ensure quality standards for Railway Ballast production</li><li>Implement efficiency improvements in the workflow</li></ul><h3>Expected Outcomes</h3><p>Enhanced production capacity meeting the 230 TPH target with maintained quality standards.</p>"
+                },
+                2: {
+                    title: "VSI to Rivo Conversion",
+                    content: "<h3>Objective</h3><p>Convert 100% of VSI production to Rivo Product.</p><h3>Key Actions</h3><ul><li>Plan and execute phased conversion strategy</li><li>Train operators on Rivo product specifications</li><li>Adjust equipment settings for optimal Rivo production</li><li>Monitor quality during transition period</li></ul><h3>Expected Outcomes</h3><p>Complete transition from VSI to Rivo product line while maintaining production efficiency.</p>"
+                },
+                3: {
+                    title: "Mining & Bench Planning",
+                    content: "<h3>Objective</h3><p>Proper planning with Mr. Siva Prasad for timely bench development.</p><h3>Key Actions</h3><ul><li>Coordinate with Mr. Siva Prasad on bench development schedule</li><li>Ensure timely availability of benches for drillers & blasters</li><li>Implement efficient mining sequence planning</li><li>Monitor bench development progress</li></ul><h3>Expected Outcomes</h3><p>Streamlined mining operations with properly developed benches available as needed.</p>"
+                },
+                4: {
+                    title: "Drilling & Blasting Agenda",
+                    content: "<h3>Objective</h3><p>Achieve 1000 holes per day with 5.5FL depth and 5 MT per hole output.</p><h3>Key Actions</h3><ul><li>Implement efficient drilling patterns</li><li>Optimize blasting techniques for better fragmentation</li><li>Engage with drillers to incorporate their experience</li><li>Identify and consult with D&B experts to reduce breaking costs</li></ul><h3>Expected Outcomes</h3><p>Increased drilling efficiency with reduced operational costs while maintaining safety standards.</p>"
+                },
+                5: {
+                    title: "Operator Training Program",
+                    content: "<h3>Objective</h3><p>Train operators on breaking patterns to avoid unnecessary boulder size reduction and cost increases.</p><h3>Key Actions</h3><ul><li>Develop comprehensive training modules on breaking patterns</li><li>Schedule hands-on training sessions</li><li>Implement monitoring to ensure proper technique application</li><li>Establish feedback mechanism for continuous improvement</li></ul><h3>Expected Outcomes</h3><p>Skilled operators who efficiently execute breaking patterns, optimizing costs and productivity.</p>"
+                },
+                6: {
+                    title: "Crusher Competitor Study",
+                    content: "<h3>Objective</h3><p>Conduct comprehensive analysis of competitors' crushers and operations.</p><h3>Key Actions</h3><ul><li>Identify number of crushers with own mines (capacity & size)</li><li>Categorize 2-stage vs 3-stage crushers in the market</li><li>Document makes of 3-stage crusher plants</li><li>Analyze location advantages and logistics costs</li></ul><h3>Expected Outcomes</h3><p>Strategic insights into competitor operations to inform business decisions and competitive positioning.</p>"
+                },
+                7: {
+                    title: "Surveyor Appointment",
+                    content: "<h3>Objective</h3><p>Appoint surveyor to measure boulder production, mine development, and plant stock.</p><h3>Key Actions</h3><ul><li>Identify qualified surveyor candidates</li><li>Define measurement protocols and reporting standards</li><li>Establish regular measurement schedule</li><li>Implement data recording and analysis system</li></ul><h3>Expected Outcomes</h3><p>Accurate measurement and tracking of key production metrics for informed decision-making.</p>"
+                },
+                8: {
+                    title: "Plant Operational Time",
+                    content: "<h3>Objective</h3><p>Define plant operational time framework for 18 hours per day operations.</p><h3>Key Actions</h3><ul><li>Analyze current operational time utilization</li><li>Develop shift schedules for 18-hour operations</li><li>Plan maintenance windows within operational framework</li><li>Establish monitoring system for operational efficiency</li></ul><h3>Expected Outcomes</h3><p>Optimized 18-hour daily operational schedule maximizing plant utilization and productivity.</p>"
+                },
+                9: {
+                    title: "Alternate Access Road Plan",
+                    content: "<h3>Objective</h3><p>Develop planning for alternate access road for tippers and identify bottlenecks.</p><h3>Key Actions</h3><ul><li>Assess current access road limitations</li><li>Identify potential alternate routes</li><li>Highlight existing and potential bottlenecks</li><li>Develop implementation plan for optimal access road solution</li></ul><h3>Expected Outcomes</h3><p>Improved logistics flow with reduced bottlenecks, enhancing overall operational efficiency.</p>"
                 }
-            });
-        });
-        
-        document.querySelectorAll('.btn-primary').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const card = this.closest('.card');
-                const title = card.querySelector('.card-title').textContent;
-                alert(`Viewing details for: ${title}`);
-            });
-        });
-        
-        document.querySelectorAll('.btn-secondary').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const card = this.closest('.card');
-                const title = card.querySelector('.card-title').textContent;
-                alert(`Updating progress for: ${title}`);
-            });
-        });
+            };
+            
+            // Update the detail slide with selected item content
+            if (details[itemNumber]) {
+                detailTitle.textContent = details[itemNumber].title;
+                detailContent.innerHTML = details[itemNumber].content;
+            }
+        }
     </script>
 </body>
 </html>
