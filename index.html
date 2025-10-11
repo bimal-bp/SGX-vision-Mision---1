@@ -4,100 +4,277 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SGX Vision Financial Year 2025-26</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* Enhanced typography with modern fonts */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #1a3a5f;
+            --primary-light: #2a5a8f;
+            --secondary: #ff6b35;
+            --accent: #00b4d8;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --button-gradient: linear-gradient(135deg, #00b4d8, #1a3a5f);
+            --button-hover-gradient: linear-gradient(135deg, #1a3a5f, #00b4d8);
+        }
+        
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(45deg, #f3f4f6, #e0e7ff, #f3f4f6, #e0e7ff);
-            background-size: 400%;
-            animation: gradientBG 15s ease infinite;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 100%);
+            color: var(--dark);
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
         }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
-
-        /* Title box with glowing effect and subtle rotation */
+        
+        header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            position: relative;
+        }
+        
         .title-box {
-            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-            border: 3px solid #93c5fd;
-            border-radius: 20px;
-            padding: 2.5rem;
-            margin-bottom: 3rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.5s ease;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             color: white;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            width: 100%;
+            margin-bottom: 25px;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
-        .title-box:hover {
-            transform: translateY(-8px) rotate(1deg);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-        }
+        
         .title-box::before {
             content: '';
             position: absolute;
             top: 0;
-            left: -100%;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+        }
+        
+        .title-box::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            animation: shimmer 3s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .flowing-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        .flowing-line {
+            position: absolute;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.2);
+            animation: flow 15s linear infinite;
+        }
+        
+        @keyframes flow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .title-box h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .title-box p {
+            font-size: 16px;
+            opacity: 0.9;
+            font-weight: 300;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .project-head {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 16px;
+            color: var(--gray);
+            background: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            z-index: 10;
+        }
+        
+        .project-head p {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .project-head h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .date {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 14px;
+            color: var(--gray);
+            background: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            z-index: 10;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .dashboard-item {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid #e0e0e0;
+            background: var(--button-gradient);
+            color: white;
+            transition: var(--transition), transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        
+        .dashboard-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+        
+        .dashboard-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            background: var(--button-hover-gradient);
+        }
+        
+        .dashboard-item:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .item-number {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dashboard-item h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 12px;
+            line-height: 1.3;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .item-meta {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-top: auto;
+        }
+        
+        .item-button {
+            background: var(--button-gradient);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition), transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .item-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
         }
-        .title-box:hover::before {
-            left: 100%;
+        
+        .item-button:hover {
+            background: var(--button-hover-gradient);
+            transform: translateY(-2px);
         }
-
-        /* Enhanced button styles with ripple effect */
-        .button-box {
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-            background: linear-gradient(135deg, #ffffff, #e0e7ff);
-            position: relative;
-            overflow: hidden;
-            width: 180%;
-            max-width: 1080px;
-            border-radius: 16px;
-            padding: 1.5rem;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-            border: 1px solid #dbeafe;
+        
+        .item-button:hover::before {
+            transform: translateX(100%);
         }
-        .button-box:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
-            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
-        }
-        .button-box:active {
-            transform: translateY(0);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-        }
-        .button-box.active {
-            background: linear-gradient(135deg, #3b82f6, #1e3a8a);
-            box-shadow: 0 0 25px rgba(59, 130, 246, 0.6);
-            color: white;
-            border: 2px solid #93c5fd;
-        }
-        .button-box::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.4s ease, height 0.4s ease;
-            pointer-events: none;
-        }
-        .button-box:hover::after {
-            width: 300px;
-            height: 300px;
-        }
-
-        /* Modal with glassmorphism effect */
+        
         .modal {
             display: none;
             position: fixed;
@@ -105,469 +282,644 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: rgba(0, 0, 0, 0.7);
             z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(4px);
-        }
-        .modal-content {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(224, 231, 255, 0.85));
-            border-radius: 20px;
-            padding: 3.5rem;
-            max-width: 900px;
-            width: 95%;
-            max-height: 90vh;
             overflow-y: auto;
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
             position: relative;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            animation: slideIn 0.4s ease;
-            backdrop-filter: blur(10px);
-        }
-        @keyframes slideIn {
-            from { transform: translateY(-60px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        .close-modal {
-            position: absolute;
-            top: 1.25rem;
-            right: 1.25rem;
-            font-size: 2rem;
-            cursor: pointer;
-            color: #1e3a8a;
-            transition: transform 0.3s ease, color 0.3s ease;
-        }
-        .close-modal:hover {
-            transform: rotate(90deg);
-            color: #3b82f6;
-        }
-
-        /* Enhanced content points animation */
-        .content-points li {
-            animation: fadeIn 0.6s ease forwards;
-            opacity: 0;
-            transform: translateX(-20px);
-            padding: 0.75rem;
-            border-left: 4px solid #3b82f6;
-            margin-bottom: 0.5rem;
-        }
-        .content-points li:nth-child(1) { animation-delay: 0.1s; }
-        .content-points li:nth-child(2) { animation-delay: 0.2s; }
-        .content-points li:nth-child(3) { animation-delay: 0.3s; }
-        .content-points li:nth-child(4) { animation-delay: 0.4s; }
-        .content-points li:nth-child(5) { animation-delay: 0.5s; }
-        .content-points li:nth-child(6) { animation-delay: 0.6s; }
-        .content-points li:nth-child(7) { animation-delay: 0.7s; }
-        .content-points li:nth-child(8) { animation-delay: 0.8s; }
-        @keyframes fadeIn {
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        /* Subheading styling */
-        .content-subheading {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #1e3a8a;
-            margin-top: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Image placeholder with hover scale and glow */
-        .content-image {
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            background-color: white;
+            margin: 5% auto;
+            padding: 40px;
+            width: 90%;
+            max-width: 900px;
             border-radius: 12px;
-            border: 2px solid #93c5fd;
-            width: 100%;
-            height: 200px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.4s ease;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 1rem;
+            border-radius: 50%;
         }
-        .content-image:hover {
-            transform: scale(1.08);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        
+        .close-btn:hover {
+            color: var(--dark);
+            background-color: #f5f5f5;
         }
-
-        /* Back to Top Button with pulse animation */
-        .back-to-top {
+        
+        .modal-header {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .modal-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .modal-subtitle {
+            font-size: 18px;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+        
+        .modal-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #f0f2f5 0%, #e4e8ed 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .modal-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .modal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .modal-body {
+            line-height: 1.7;
+        }
+        
+        .modal-body h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+            color: var(--primary);
+            margin: 25px 0 15px;
+        }
+        
+        .modal-body p {
+            margin-bottom: 15px;
+        }
+        
+        .modal-body ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .modal-body li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 10px;
+        }
+        
+        .modal-body li::before {
+            content: '•';
+            color: var(--accent);
+            font-weight: bold;
+            position: absolute;
+            left: -15px;
+        }
+        
+        .image-modal {
+            display: none;
             position: fixed;
-            bottom: 2.5rem;
-            right: 2.5rem;
-            background: linear-gradient(135deg, #3b82f6, #1e3a8a);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .image-modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+            animation: imageModalFadeIn 0.3s ease;
+        }
+        
+        @keyframes imageModalFadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .image-modal-content img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        .image-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
             color: white;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
-            opacity: 0;
-            pointer-events: none;
-            animation: pulse 2s infinite;
+            cursor: pointer;
+            z-index: 2001;
+            background: rgba(0, 0, 0, 0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
         }
-        .back-to-top.show {
-            opacity: 1;
-            pointer-events: auto;
+        
+        .image-modal-close:hover {
+            background: rgba(0, 0, 0, 0.7);
+            transform: scale(1.1);
         }
-        .back-to-top:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        
+        .image-modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 40px;
+            color: white;
+            cursor: pointer;
+            z-index: 2001;
+            background: rgba(0, 0, 0, 0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
         }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+        
+        .image-modal-nav:hover {
+            background: rgba(0, 0, 0, 0.7);
+            transform: translateY(-50%) scale(1.1);
         }
-
-        /* Date styling in top right */
-        .date-box {
-            background: linear-gradient(135deg, #ffffff, #e0e7ff);
-            padding: 0.75rem 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+        
+        .image-modal-prev {
+            left: 30px;
         }
-        .date-box:hover {
-            transform: translateY(-4px);
+        
+        .image-modal-next {
+            right: 30px;
+        }
+        
+        .image-modal-caption {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-size: 16px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        @media (max-width: 768px) {
+            .title-box h1 {
+                font-size: 26px;
+            }
+            
+            .modal-content {
+                padding: 25px;
+                width: 95%;
+            }
+            
+            .project-head {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-top: 20px;
+            }
+            
+            .image-modal-nav, .image-modal-close {
+                font-size: 30px;
+                width: 40px;
+                height: 40px;
+            }
+            
+            .image-modal-prev {
+                left: 15px;
+            }
+            
+            .image-modal-next {
+                right: 15px;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-item {
+                height: 160px;
+            }
         }
     </style>
 </head>
-<body class="font-sans antialiased">
-    <div class="container mx-auto p-8">
-        <!-- Title Box -->
-        <div class="title-box text-center mb-12" onclick="resetButtonColors()">
-            <h1 class="text-5xl font-extrabold mb-4 tracking-tight">SGX Vision Financial Year 2025-26</h1>
-            <p class="text-xl font-medium">Project Head: Arun Kumar</p>
-        </div>
+<body>
+    <div class="container">
+        <div class="date" id="current-date">Loading date...</div>
+        
+        <header>
+            <div class="title-box">
+                <div class="flowing-lines">
+                    <div class="flowing-line" style="top: 20%; animation-delay: 0s;"></div>
+                    <div class="flowing-line" style="top: 40%; animation-delay: 2s;"></div>
+                    <div class="flowing-line" style="top: 60%; animation-delay: 4s;"></div>
+                    <div class="flowing-line" style="top: 80%; animation-delay: 6s;"></div>
+                </div>
+                <h1>SGX Vision Financial Year 2025-26</h1>
+                <p>Strategic Initiatives & Operational Excellence</p>
+            </div>
+            <div class="project-head">
+                <p>Project Head</p>
+                <h3>Mr. N. Arun Kumar</h3>
+            </div>
+        </header>
+        
+        <main class="dashboard-grid">
+            <div class="dashboard-item" onclick="openModal(1)">
+                <div class="item-number">01</div>
+                <h2>METSO Plant Optimization</h2>
+                <div class="item-meta">
+                    <button class="item-button">View Details</button>
+                </div>
+            </div>
+            
+            <div class="dashboard-item" onclick="openModal(2)">
+                <div class="item-number">02</div>
+                <h2>VSI to Rivo Conversion</h2>
+                <div class="item-meta">
+                    <button class="item-button">View Details</button>
+                </div>
+            </div>
+            
+            <div class="dashboard-item" onclick="openModal(3)">
+                <div class="item-number">03</div>
+                <h2>Mining & Bench Planning</h2>
+                <div class="item-meta">
+                    <button class="item-button">View Details</button>
+                </div>
+            </div>
+            
+            <div class="dashboard-item" onclick="openModal(4)">
+                <div class="item-number">04</div>
+                <h2>Drilling & Blasting Agenda</h2>
+                <div class="item-meta">
+                    <button class="item-button">View Details</button>
+                </div>
+            </div>
+            
+            <div class="dashboard-item" onclick="openModal(5)">
+                <div class="item-number">05</div>
+                <h2>Operator Training Program</h2>
+                <div class="item-meta">
+                    <button class="item-button">View Details</button>
+                </div>
+            </div>
+            
+            <div class="dashboard-item" onclick="openModal(6)">
+                <div class="item-number">06</div>
+                <h2>Crusher Competitor Study</h2>
+                <div class="item-meta">
+                    <button class="item-button">View Details</button>
+                </div>
+            </div>
+            
+            <div class="dashboard-item" onclick="openModal(7)">
+                <div class="item-number">07</div>
+                <h2>Surveyor Appointment</h2>
+                <div class="item-meta">
+                    <button class="item-button">View Details</button>
+                </div>
+            </div>
+            
+            <div class="dashboard-item" onclick="openModal(8)">
+                <div class="item-number">08</div>
+                <h2>Plant Operational Time</h2>
+                <div class="item-meta">
+                    <button class="item-button">View Details</button>
+                </div>
+            </div>
+            
+            <div class="dashboard-item" onclick="openModal(9)">
+                <div class="item-number">09</div>
+                <h2>Alternate Access Road Plan</h2>
+                <div class="item-meta">
+                    <button class="item-button">View Details</button>
+                </div>
+            </div>
+        </main>
+    </div>
 
-        <!-- Date in Top Right Corner -->
-        <div class="date-box absolute top-4 right-4 text-gray-700 font-medium">
-            <p>October 11, 2025</p>
-        </div>
-
-        <!-- Clickable Buttons (Vertical Layout, Centered) -->
-        <div class="flex flex-col items-center gap-8 max-w-3xl mx-auto">
-            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('METSO Plant Optimization', this)">
-                1. METSO Plant Optimization
-            </button>
-            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('VSI to Rivo Conversion', this)">
-                2. VSI to Rivo Conversion
-            </button>
-            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('Mining & Bench Planning', this)">
-                3. Mining & Bench Planning
-            </button>
-            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('Drilling & Blasting Agenda', this)">
-                4. Drilling & Blasting Agenda
-            </button>
-            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('Operator Training Program', this)">
-                5. Operator Training Program
-            </button>
-            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('Crusher Competitor Study', this)">
-                6. Crusher Competitor Study
-            </button>
-            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('Surveyor Appointment', this)">
-                7. Surveyor Appointment
-            </button>
-            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('Plant Operational Time', this)">
-                8. Plant Operational Time
-            </button>
-            <button class="button-box bg-white p-6 rounded-xl shadow-lg text-center text-xl font-semibold text-gray-800" onclick="showContent('Alternate Access Road Plan', this)">
-                9. Alternate Access Road Plan
-            </button>
-        </div>
-
-        <!-- Modal for Content Display -->
-        <div id="modal" class="modal">
-            <div class="modal-content">
-                <span class="close-modal" onclick="closeModal()">&times;</span>
-                <h2 id="content-title" class="text-3xl font-bold text-gray-900 mb-6"></h2>
-                <div id="content-sections"></div>
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Title</h2>
+                <p class="modal-subtitle" id="modalSubtitle">Subtitle</p>
+            </div>
+            <div class="modal-body" id="modalBody">
+                Detailed content will appear here.
             </div>
         </div>
+    </div>
 
-        <!-- Back to Top Button -->
-        <button class="back-to-top" onclick="scrollToTop()">Back to Top</button>
+    <div id="imageModal" class="image-modal">
+        <span class="image-modal-close" onclick="closeImageModal()">&times;</span>
+        <span class="image-modal-nav image-modal-prev" onclick="changeImage(-1)">&#10094;</span>
+        <span class="image-modal-nav image-modal-next" onclick="changeImage(1)">&#10095;</span>
+        <div class="image-modal-content">
+            <img id="fullImage" src="" alt="Full size image">
+            <div class="image-modal-caption" id="imageCaption"></div>
+        </div>
     </div>
 
     <script>
-        const contentData = {
-            'METSO Plant Optimization': {
-                sections: [
-                    {
-                        title: 'Internal Trial for 230 TPH including Railway Ballast Production',
-                        points: [
-                            'Jaw CSS: 96 mm',
-                            'Cone CSS: 32 mm',
-                            'Screen Top: 60 mm - 6 nos',
-                            'Screen Bottom: 42 mm - 4 nos',
-                            'Trial Results: Image will be added from GitHub'
-                        ],
-                        image: true
-                    },
-                    {
-                        title: 'New Plan',
-                        points: [
-                            'Image will be added from GitHub'
-                        ],
-                        image: true
-                    },
-                    {
-                        title: 'New Conveyor Questions',
-                        points: [
-                            'Conveyor Questions Image',
-                            'Image will be added from GitHub'
-                        ],
-                        image: true
-                    },
-                    {
-                        title: 'Project Timeline',
-                        points: [
-                            'Work Start Date: June 15, 2025',
-                            'Work End Date: September 30, 2025'
-                        ],
-                        image: false
-                    },
-                    {
-                        title: 'General Goals',
-                        points: [
-                            'Enhance plant efficiency by 15% through automation.',
-                            'Reduce downtime with predictive maintenance.',
-                            'Integrate real-time monitoring systems.'
-                        ],
-                        image: false
-                    }
-                ]
-            },
-            'VSI to Rivo Conversion': {
-                sections: [{
-                    title: '',
-                    points: [
-                        'Upgrade VSI systems to Rivo for better performance.',
-                        'Train staff on new system operations.',
-                        'Complete conversion by Q2 2026.'
-                    ],
-                    image: false
-                }]
-            },
-            'Mining & Bench Planning': {
-                sections: [{
-                    title: '',
-                    points: [
-                        'Optimize bench designs for higher yield.',
-                        'Implement 3D modeling for planning.',
-                        'Reduce environmental impact by 10%.'
-                    ],
-                    image: false
-                }]
-            },
-            'Drilling & Blasting Agenda': {
-                sections: [{
-                    title: '',
-                    points: [
-                        'Adopt eco-friendly blasting techniques.',
-                        'Improve drilling precision with new tech.',
-                        'Schedule quarterly safety audits.'
-                    ],
-                    image: false
-                }]
-            },
-            'Operator Training Program': {
-                sections: [{
-                    title: '',
-                    points: [
-                        'Launch comprehensive training modules.',
-                        'Certify 100 operators by year-end.',
-                        'Focus on safety and efficiency.'
-                    ],
-                    image: false
-                }]
-            },
-            'Crusher Competitor Study': {
-                sections: [{
-                    title: '',
-                    points: [
-                        'Analyze top 5 competitors’ crusher tech.',
-                        'Identify gaps in current crusher models.',
-                        'Propose upgrades by Q3 2026.'
-                    ],
-                    image: false
-                }]
-            },
-            'Surveyor Appointment': {
-                sections: [{
-                    title: '',
-                    points: [
-                        'Hire 3 experienced surveyors by Q1 2026.',
-                        'Train surveyors on latest GPS tools.',
-                        'Ensure compliance with regulations.'
-                    ],
-                    image: false
-                }]
-            },
-            'Plant Operational Time': {
-                sections: [{
-                    title: '',
-                    points: [
-                        'Increase uptime to 95% by Q4 2026.',
-                        'Streamline maintenance schedules.',
-                        'Monitor KPIs for performance.'
-                    ],
-                    image: false
-                }]
-            },
-            'Alternate Access Road Plan': {
-                sections: [{
-                    title: '',
-                    points: [
-                        'Design new access road by Q2 2026.',
-                        'Reduce transport time by 20%.',
-                        'Ensure road safety compliance.'
-                    ],
-                    image: false
-                }]
+        // Set current date
+        const currentDate = new Date();
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('current-date').textContent = currentDate.toLocaleDateString('en-US', options);
+        
+        // Create flowing lines for the title box
+        function createFlowingLines() {
+            const flowingLines = document.querySelector('.flowing-lines');
+            for (let i = 0; i < 8; i++) {
+                const line = document.createElement('div');
+                line.classList.add('flowing-line');
+                line.style.top = `${Math.random() * 100}%`;
+                line.style.width = `${20 + Math.random() * 60}%`;
+                line.style.animationDelay = `${Math.random() * 10}s`;
+                flowingLines.appendChild(line);
             }
-        };
-
-        let lastActiveButton = null;
-
-        // Random light color generator for title box
-        function getRandomLightColor() {
-            const colors = [
-                'linear-gradient(135deg, #60a5fa, #3b82f6)', // Light Blue
-                'linear-gradient(135deg, #a5b4fc, #818cf8)', // Light Indigo
-                'linear-gradient(135deg, #f9a8d4, #ec4899)', // Light Pink
-                'linear-gradient(135deg, #6ee7b7, #34d399)', // Light Green
-                'linear-gradient(135deg, #fbcfe8, #f472b6)'  // Light Rose
-            ];
-            return colors[Math.floor(Math.random() * colors.length)];
         }
-
-        function getRandomTextColor() {
-            const textColors = [
-                '#1e3a8a', // Dark Blue
-                '#3730a3', // Dark Indigo
-                '#831843', // Dark Pink
-                '#065f46', // Dark Green
-                '#9f1239'  // Dark Rose
-            ];
-            return textColors[Math.floor(Math.random() * textColors.length)];
-        }
-
-        // Auto-change title box color every 5 seconds
-        function autoChangeTitleColor() {
-            const titleBox = document.querySelector('.title-box');
-            titleBox.style.background = getRandomLightColor();
-            titleBox.style.color = getRandomTextColor();
-        }
-
-        // Set interval for title color change
-        setInterval(autoChangeTitleColor, 5000);
-
-        function resetButtonColors() {
-            const buttons = document.querySelectorAll('.button-box');
-            buttons.forEach(button => {
-                button.classList.remove('active');
-                button.style.background = 'linear-gradient(135deg, #ffffff, #e0e7ff)';
-                button.style.color = '#1f2937';
-            });
-            lastActiveButton = null;
-            // Change title box background and text color
-            autoChangeTitleColor();
-        }
-
-        function showContent(buttonName, button) {
-            const modal = document.getElementById('modal');
-            const contentTitle = document.getElementById('content-title');
-            const contentSections = document.getElementById('content-sections');
-            const backToTopButton = document.querySelector('.back-to-top');
-
-            // Update title
-            contentTitle.textContent = buttonName;
-
-            // Update sections
-            contentSections.innerHTML = '';
-            contentData[buttonName].sections.forEach(section => {
-                // Create subheading if present
-                if (section.title) {
-                    const subheading = document.createElement('h3');
-                    subheading.className = 'content-subheading';
-                    subheading.textContent = section.title;
-                    contentSections.appendChild(subheading);
-                }
-
-                // Create points list
-                const ul = document.createElement('ul');
-                ul.className = 'content-points list-disc list-inside text-gray-700 text-lg space-y-3';
-                section.points.forEach(point => {
-                    const li = document.createElement('li');
-                    li.textContent = point;
-                    ul.appendChild(li);
+        
+        createFlowingLines();
+        
+        // Modal functionality
+        const modal = document.getElementById('detailModal');
+        const imageModal = document.getElementById('imageModal');
+        let currentImages = [];
+        let currentImageIndex = 0;
+        
+        function openModal(itemNumber) {
+            const itemData = getItemData(itemNumber);
+            
+            document.getElementById('modalTitle').textContent = itemData.title;
+            document.getElementById('modalSubtitle').textContent = itemData.subtitle;
+            document.getElementById('modalBody').innerHTML = itemData.body;
+            
+            // Add click handlers to images in the modal
+            setTimeout(() => {
+                const modalImages = document.querySelectorAll('.modal-image img');
+                modalImages.forEach((img, index) => {
+                    img.addEventListener('click', () => {
+                        openImageModal(img.src, index);
+                    });
                 });
-                contentSections.appendChild(ul);
-
-                // Add image placeholder if specified
-                if (section.image) {
-                    const imageDiv = document.createElement('div');
-                    imageDiv.className = 'content-image';
-                    imageDiv.innerHTML = '<p class="text-gray-600 font-medium">Image Placeholder (To be added from GitHub)</p>';
-                    contentSections.appendChild(imageDiv);
-                }
-            });
-
-            // Show modal
-            modal.style.display = 'flex';
-
-            // Show back to top button
-            backToTopButton.classList.add('show');
-
-            // Handle active button state with random background and text color
-            if (lastActiveButton) {
-                lastActiveButton.classList.remove('active');
-                lastActiveButton.style.background = 'linear-gradient(135deg, #ffffff, #e0e7ff)';
-                lastActiveButton.style.color = '#1f2937';
-            }
-            button.classList.add('active');
-            button.style.background = getRandomLightColor();
-            button.style.color = getRandomTextColor();
-            lastActiveButton = button;
+            }, 100);
+            
+            modal.style.display = 'block';
         }
-
+        
         function closeModal() {
-            const modal = document.getElementById('modal');
             modal.style.display = 'none';
-            if (lastActiveButton) {
-                lastActiveButton.classList.remove('active');
-                lastActiveButton.style.background = 'linear-gradient(135deg, #ffffff, #e0e7ff)';
-                lastActiveButton.style.color = '#1f2937';
-                lastActiveButton = null;
+        }
+        
+        function openImageModal(src, index) {
+            const modalImages = document.querySelectorAll('.modal-image img');
+            currentImages = Array.from(modalImages).map(img => ({
+                src: img.src,
+                alt: img.alt
+            }));
+            
+            currentImageIndex = index;
+            updateImageModal();
+            imageModal.style.display = 'flex';
+        }
+        
+        function closeImageModal() {
+            imageModal.style.display = 'none';
+        }
+        
+        function changeImage(direction) {
+            currentImageIndex += direction;
+            
+            if (currentImageIndex < 0) {
+                currentImageIndex = currentImages.length - 1;
+            } else if (currentImageIndex >= currentImages.length) {
+                currentImageIndex = 0;
+            }
+            
+            updateImageModal();
+        }
+        
+        function updateImageModal() {
+            const fullImage = document.getElementById('fullImage');
+            const imageCaption = document.getElementById('imageCaption');
+            
+            if (currentImages.length > 0 && currentImageIndex < currentImages.length) {
+                fullImage.src = currentImages[currentImageIndex].src;
+                imageCaption.textContent = currentImages[currentImageIndex].alt || `Image ${currentImageIndex + 1} of ${currentImages.length}`;
             }
         }
-
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Show back to top button when scrolling
-        window.addEventListener('scroll', () => {
-            const backToTopButton = document.querySelector('.back-to-top');
-            if (window.scrollY > 300) {
-                backToTopButton.classList.add('show');
-            } else {
-                backToTopButton.classList.remove('show');
-            }
-        });
-
-        // Close modal when clicking outside
-        window.addEventListener('click', (event) => {
-            const modal = document.getElementById('modal');
-            if (event.target === modal) {
+        
+        window.onclick = function(event) {
+            if (event.target == modal) {
                 closeModal();
             }
+            if (event.target == imageModal) {
+                closeImageModal();
+            }
+        }
+        
+        document.addEventListener('keydown', function(event) {
+            if (imageModal.style.display === 'flex') {
+                if (event.key === 'Escape') {
+                    closeImageModal();
+                } else if (event.key === 'ArrowLeft') {
+                    changeImage(-1);
+                } else if (event.key === 'ArrowRight') {
+                    changeImage(1);
+                }
+            }
         });
+        
+        function getItemData(itemNumber) {
+            const data = {
+                1: {
+                    title: "METSO Plant Optimization",
+                    subtitle: "Internal Trial for 230 TPH including Railway Ballast Production",
+                    body: `
+                        <h3>Setting Details</h3>
+                        <ul>
+                            <li>Jaw CSS: 96 mm</li>
+                            <li>Cone CSS: 32 mm</li>
+                            <li>Screen Top: 60 mm - 6 nos</li>
+                            <li>Screen Bottom: 42 mm - 4 nos</li>
+                        </ul>
+                        
+                        <h3>Trial Results</h3>
+                        <div class="modal-image">
+                            <img src="https://raw.githubusercontent.com/bimal-bp/work_vision_sgx/main/Screenshot%202025-10-11%20124309.png" 
+                                 alt="Trial Results Analysis">
+                        </div>
+                        
+                        <h3>New Plan</h3>
+                        <div class="modal-image">
+                            <img src="https://raw.githubusercontent.com/bimal-bp/work_vision_sgx/main/Screenshot%202025-10-10%20174102.png" 
+                                 alt="Optimization Strategy">
+                        </div>
 
-        // Initialize title color on page load
-        autoChangeTitleColor();
+                        <h3>New Conveyor Quotation</h3>
+                        <div class="modal-image">
+                            <img src="https://raw.githubusercontent.com/bimal-bp/work_vision_sgx/main/CONVEROYOR%20QUATION.png" 
+                                 alt="Conveyor Quotation">
+                        </div>
+                        
+                        <h3>Project Timeline</h3>
+                        <ul>
+                            <li>Expected Work Completion Date: 25/10/2025</li>
+                            <li>It will help to increase 20% Production</li>
+                        </ul>
+                    `
+                },
+                2: {
+                    title: "VSI to Rivo Conversion",
+                    subtitle: "100% Conversion of VSI to RIVO Sand",
+                    body: `
+                        <h3>Project Overview</h3>
+                        <p>Send an Enquiry for Sigma</p>
+                        <div class="modal-image">
+                            <img src="https://via.placeholder.com/800x400?text=VSI+to+Rivo+Conversion" 
+                                 alt="VSI to Rivo Conversion Diagram">
+                        </div>
+                    `
+                },
+                3: {
+                    title: "Mining & Bench Planning",
+                    subtitle: "Strategic planning for optimized mining operations and bench design",
+                    body: `
+                        <h3>Project Overview</h3>
+                        <p>This initiative focuses on developing comprehensive mining plans that maximize resource extraction while minimizing environmental impact and operational costs.</p>
+                        <div class="modal-image">
+                            <img src="https://via.placeholder.com/800x400?text=Mining+and+Bench+Planning" 
+                                 alt="Mining and Bench Planning">
+                        </div>
+                    `
+                },
+                4: {
+                    title: "Drilling & Blasting Agenda",
+                    subtitle: "Advanced techniques for precision drilling and controlled blasting",
+                    body: `
+                        <h3>Project Overview</h3>
+                        <p>Details for the drilling and blasting agenda will be updated soon.</p>
+                        <div class="modal-image">
+                            <img src="https://via.placeholder.com/800x400?text=Drilling+and+Blasting+Agenda" 
+                                 alt="Drilling and Blasting Agenda">
+                        </div>
+                    `
+                },
+                5: {
+                    title: "Operator Training Program",
+                    subtitle: "Comprehensive skill development for equipment operators",
+                    body: `
+                        <h3>Project Overview</h3>
+                        <p>Details for the operator training program will be updated soon.</p>
+                        <div class="modal-image">
+                            <img src="https://via.placeholder.com/800x400?text=Operator+Training+Program" 
+                                 alt="Operator Training Program">
+                        </div>
+                    `
+                },
+                6: {
+                    title: "Crusher Competitor Study",
+                    subtitle: "Market analysis of competing crushing technologies and methodologies",
+                    body: `
+                        <h3>Project Overview</h3>
+                        <p>Details for the crusher competitor study will be updated soon.</p>
+                        <div class="modal-image">
+                            <img src="https://via.placeholder.com/800x400?text=Crusher+Competitor+Study" 
+                                 alt="Crusher Competitor Study">
+                        </div>
+                    `
+                },
+                7: {
+                    title: "Surveyor Appointment",
+                    subtitle: "Strategic hiring and deployment of surveying professionals",
+                    body: `
+                        <h3>Project Overview</h3>
+                        <p>Details for the surveyor appointment will be updated soon.</p>
+                        <div class="modal-image">
+                            <img src="https://via.placeholder.com/800x400?text=Surveyor+Appointment" 
+                                 alt="Surveyor Appointment">
+                        </div>
+                    `
+                },
+                8: {
+                    title: "Plant Operational Time",
+                    subtitle: "Maximizing plant availability and operational efficiency",
+                    body: `
+                        <h3>Plant Running Hours</h3>
+                        <div class="modal-image">
+                            <img src="https://raw.githubusercontent.com/bimal-bp/work_vision_sgx/main/Screenshot%202025-10-11%20150117.png" 
+                                 alt="Plant Operational Time">
+                        </div>
+                    `
+                },
+                9: {
+                    title: "Alternate Access Road Plan",
+                    subtitle: "Development of secondary access routes for operational continuity",
+                    body: `
+                        <h3>Project Overview</h3>
+                        <p>Details for the alternate access road plan will be updated soon.</p>
+                        <div class="modal-image">
+                            <img src="https://via.placeholder.com/800x400?text=Alternate+Access+Road+Plan" 
+                                 alt="Alternate Access Road Plan">
+                        </div>
+                    `
+                }
+            };
+            
+            return data[itemNumber] || {
+                title: "Project " + itemNumber,
+                subtitle: "Details for project " + itemNumber,
+                body: "<p>Detailed information for this project will be available soon.</p>"
+            };
+        }
     </script>
 </body>
 </html>
