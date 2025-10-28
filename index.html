@@ -39,11 +39,13 @@ button:disabled {opacity:.6;cursor:not-allowed;transform:none;box-shadow:none;}
 .visualizer {height:80px;margin:1.5rem 0;display:flex;justify-content:center;align-items:center;gap:3px;}
 .bar {width:6px;background:#3498db;border-radius:5px;transition:height .1s;}
 .saved-transcripts h3 {margin-bottom:1rem;color:#2c3e50;border-bottom:1px solid #e0e0e0;padding-bottom:.5rem;}
-.transcript-list {max-height:200px;overflow-y:auto;}
-.transcript-item {background:#fff;padding:1rem;border-radius:8px;margin-bottom:.5rem;border:1px solid #e0e0e0;}
+.transcript-list {max-height:250px;overflow-y:auto;}
+.transcript-item {background:#fff;padding:1rem;border-radius:8px;margin-bottom:.5rem;border:1px solid #e0e0e0;cursor:pointer;transition:0.2s;}
+.transcript-item:hover {background:#f8f9fa;}
 .transcript-header {display:flex;justify-content:space-between;margin-bottom:.5rem;}
 .transcript-name {font-weight:bold;color:#3498db;}
-.transcript-content {font-size:.9rem;color:#555;}
+.transcript-content {font-size:.9rem;color:#555;max-height:60px;overflow:hidden;transition:max-height 0.3s;}
+.transcript-content.expanded {max-height:500px;overflow:auto;}
 .delete-btn {background:#e74c3c;color:#fff;border:none;border-radius:5px;padding:.3rem .6rem;cursor:pointer;font-size:.8rem;}
 .hidden {display:none;}
 @media (max-width:600px){
@@ -135,6 +137,7 @@ let selectedLanguage = 'en-US';
 let isListening = false;
 let isListeningForName = false;
 let currentTranscript = '';
+let fullTranscripts = {}; // To store full text
 
 const recognition = ('SpeechRecognition' in window) ? new SpeechRecognition() : new webkitSpeechRecognition();
 const nameRecognition = ('SpeechRecognition' in window) ? new SpeechRecognition() : new webkitSpeechRecognition();
@@ -149,6 +152,14 @@ const langMap = { 'en-US':'English', 'hi-IN':'Hindi' };
 const welcomeMsg = { 
     'en-US':'Welcome to SGX Minerals. Please say your name now.',
     'hi-IN':'एसजीएक्स मिनरल्स में आपका स्वागत है। कृपया अपना नाम बोलें।'
+};
+const helloMsg = {
+    'en-US': name => `Hello ${name}, we can start now.`,
+    'hi-IN': name => `हैलो ${name}, अब हम शुरू कर सकते हैं।`
+};
+const startPrompt = {
+    'en-US': 'Say "stop" when you want to finish.',
+    'hi-IN': 'जब समाप्त करना चाहें तो "stop" बोलें।'
 };
 const namePrompts = { 'en-US':'Please say your name', 'hi-IN':'अपना नाम बोलें' };
 const nameInstr  = { 'en-US':'We\'ll save your transcript with this name',
@@ -213,15 +224,20 @@ langBtns.forEach(btn => {
    ============================================================== */
 nameRecognition.onresult = e => {
     speakerName = e.results[0][0].transcript.trim();
-    if (speakerName.length < 2) return; // too short
+    if (speakerName.length < 2) return;
 
     nameStatusDiv.textContent = nameStatus[selectedLanguage].success;
     stopNameListening();
 
-    // Auto-proceed to main UI
-    setTimeout(() => {
-        proceedToMainUI();
-    }, 1000);
+    // === NEW: Say "Hello [Name], we can start now." ===
+    speak(helloMsg[selectedLanguage](speakerName), selectedLanguage, () => {
+        setTimeout(() => {
+            // === NEW: Say "Say stop when to finish" ===
+            speak(startPrompt[selectedLanguage], selectedLanguage, () => {
+                setTimeout(proceedToMainUI, 800);
+            });
+        }, 600);
+    });
 };
 
 nameRecognition.onerror = () => {
@@ -234,7 +250,7 @@ nameRecognition.onerror = () => {
 
 nameRecognition.onend = () => {
     if (isListeningForName) {
-        setTimeout(startNameListening, 500); // retry
+        setTimeout(startNameListening, 500);
     }
 };
 
@@ -257,7 +273,9 @@ function proceedToMainUI() {
     nameSection.classList.add('hidden');
     mainSection.classList.remove('hidden');
     loadSavedTranscripts();
-    setTimeout(startListening, 1000);
+    setTimeout(() => {
+        statusDiv.textContent = `Say "stop" to finish and save.`;
+    }, 500);
 }
 
 /* Optional manual submit (fallback) */
@@ -265,14 +283,20 @@ $('#submit-name').addEventListener('click', () => {
     const input = $('#speaker-name').value.trim();
     if (!input) return alert("Please enter your name");
     speakerName = input;
-    proceedToMainUI();
+    speak(helloMsg[selectedLanguage](speakerName), selectedLanguage, () => {
+        setTimeout(() => {
+            speak(startPrompt[selectedLanguage], selectedLanguage, () => {
+                setTimeout(proceedToMainUI, 800);
+            });
+        }, 600);
+    });
 });
 $('#speaker-name').addEventListener('keypress', e => {
     if (e.key === 'Enter') $('#submit-name').click();
 });
 
 /* ==============================================================
-   MAIN LISTENING + AUTO-SAVE ON "STOP"
+   MAIN LISTENING + AUTO-SAVE FULL TEXT ON "STOP"
    ============================================================== */
 $('#start-btn').addEventListener('click', startListening);
 $('#stop-btn').addEventListener('click', stopListening);
@@ -345,7 +369,7 @@ function stopListening() {
 }
 
 /* ==============================================================
-   VISUALIZER + STORAGE
+   VISUALIZER + FULL TEXT STORAGE
    ============================================================== */
 function animateBars() {
     if (!isListening) return;
@@ -356,6 +380,7 @@ function animateBars() {
 function saveTranscript(key, text) {
     const store = JSON.parse(localStorage.getItem('sgxTranscripts') || '{}');
     store[key] = text;
+    fullTranscripts[key] = text; // Keep full text
     localStorage.setItem('sgxTranscripts', JSON.stringify(store));
     loadSavedTranscripts();
 }
@@ -369,6 +394,8 @@ function loadSavedTranscripts() {
             found = true;
             const item = document.createElement('div');
             item.className = 'transcript-item';
+            item.onclick = () => toggleTranscript(item, k);
+
             const header = document.createElement('div');
             header.className = 'transcript-header';
             const name = document.createElement('div');
@@ -377,16 +404,31 @@ function loadSavedTranscripts() {
             const del = document.createElement('button');
             del.className = 'delete-btn';
             del.textContent = 'Delete';
-            del.onclick = () => deleteTranscript(k);
+            del.onclick = (e) => { e.stopPropagation(); deleteTranscript(k); };
             header.append(name, del);
+
             const content = document.createElement('div');
             content.className = 'transcript-content';
-            content.textContent = v.length > 120 ? v.slice(0, 120) + '...' : v;
+            const preview = v.length > 120 ? v.slice(0, 120) + '...' : v;
+            content.textContent = preview;
+
             item.append(header, content);
             transcriptList.appendChild(item);
         }
     }
     if (!found) transcriptList.innerHTML = '<p>No saved transcripts yet.</p>';
+}
+
+function toggleTranscript(item, key) {
+    const content = item.querySelector('.transcript-content');
+    const fullText = JSON.parse(localStorage.getItem('sgxTranscripts'))[key];
+    if (content.classList.contains('expanded')) {
+        content.classList.remove('expanded');
+        content.textContent = fullText.length > 120 ? fullText.slice(0, 120) + '...' : fullText;
+    } else {
+        content.classList.add('expanded');
+        content.textContent = fullText;
+    }
 }
 
 function deleteTranscript(key) {
