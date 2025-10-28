@@ -3,923 +3,1001 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SGX Vision Financial Year 2025-26</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Multilingual Speech to Text</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-        
-        :root {
-            --primary: #1a3a5f;
-            --primary-light: #2a5a8f;
-            --secondary: #ff6b35;
-            --accent: #00b4d8;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --gray: #6c757d;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
-            --button-gradient: linear-gradient(135deg, #00b4d8, #1a3a5f);
-            --button-hover-gradient: linear-gradient(135deg, #1a3a5f, #00b4d8);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 100%);
-            color: var(--dark);
-            font-family: 'Open Sans', sans-serif;
-            line-height: 1.6;
-            padding: 20px;
+            background-color: #f5f7fa;
+            color: #333;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
         }
         
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
+            max-width: 900px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e1e8ed;
         }
         
         header {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 40px;
-            padding-bottom: 20px;
-            position: relative;
-        }
-        
-        .title-box {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            color: white;
-            padding: 30px 40px;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
             text-align: center;
-            width: 100%;
-            margin-bottom: 25px;
-            position: relative;
-            overflow: hidden;
+            margin-bottom: 2rem;
         }
         
-        .title-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--secondary), var(--accent));
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
-        .title-box::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transform: translateX(-100%);
-            animation: shimmer 3s infinite;
+        .subtitle {
+            font-size: 1.1rem;
+            color: #7f8c8d;
         }
         
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+        .language-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            border-left: 4px solid #3498db;
         }
         
-        .flowing-lines {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 0;
+        .language-section h2 {
+            margin-bottom: 1rem;
+            color: #2c3e50;
         }
         
-        .flowing-line {
-            position: absolute;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.2);
-            animation: flow 15s linear infinite;
+        .language-selector {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 1rem;
+            flex-wrap: wrap;
         }
         
-        @keyframes flow {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-        
-        .title-box h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 32px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            margin-bottom: 5px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .title-box p {
-            font-size: 16px;
-            opacity: 0.9;
-            font-weight: 300;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .project-head {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 16px;
-            color: var(--gray);
-            background: white;
-            padding: 15px 25px;
+        .lang-btn {
+            padding: 0.7rem 1.2rem;
+            font-size: 1rem;
+            border: 2px solid #3498db;
             border-radius: 8px;
-            box-shadow: var(--shadow);
-            z-index: 10;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            background: white;
+            color: #3498db;
         }
         
-        .project-head p {
-            font-size: 14px;
-            margin-bottom: 5px;
+        .lang-btn.active {
+            background: #3498db;
+            color: white;
         }
         
-        .project-head h3 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 18px;
-            color: var(--primary);
+        .lang-btn:hover {
+            background: #3498db;
+            color: white;
+        }
+        
+        .name-section {
+            background: #e8f4fc;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            border-left: 4px solid #3498db;
+        }
+        
+        .name-section h2 {
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+        
+        .audio-prompt {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #f39c12;
+            text-align: center;
+        }
+        
+        .audio-prompt h4 {
+            color: #f39c12;
+            margin-bottom: 0.5rem;
+        }
+        
+        .audio-prompt button {
+            background: #f39c12;
+            color: white;
+            margin-top: 0.5rem;
+        }
+        
+        .name-input {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .name-input input {
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            width: 250px;
+        }
+        
+        button {
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
             font-weight: 600;
         }
         
-        .date {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 14px;
-            color: var(--gray);
-            background: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-            z-index: 10;
+        #submit-name {
+            background: #3498db;
+            color: white;
         }
         
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+        #submit-name:hover {
+            background: #2980b9;
         }
         
-        .dashboard-item {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: var(--shadow);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            height: 150px;
+        .controls {
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        #start-btn {
+            background: #2ecc71;
+            color: white;
+        }
+        
+        #stop-btn {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        #save-btn {
+            background: #3498db;
+            color: white;
+        }
+        
+        #clear-btn {
+            background: #95a5a6;
+            color: white;
+        }
+        
+        #translate-btn {
+            background: #9b59b6;
+            color: white;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .status {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            height: 1.5rem;
+            color: #7f8c8d;
+        }
+        
+        .speaker-info {
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        .language-info {
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            color: #7f8c8d;
+        }
+        
+        .output-container {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            min-height: 300px;
+            margin-bottom: 1.5rem;
+            overflow-y: auto;
+            max-height: 400px;
             border: 1px solid #e0e0e0;
-            background: var(--button-gradient);
-            color: white;
-            transition: var(--transition), transform 0.4s ease, box-shadow 0.4s ease;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
         }
         
-        .dashboard-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.5s ease;
+        #transcript {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            min-height: 200px;
         }
         
-        .dashboard-item:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-            background: var(--button-hover-gradient);
+        .translated-text {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #9b59b6;
         }
         
-        .dashboard-item:hover::before {
-            transform: translateX(100%);
+        .translated-text h4 {
+            color: #9b59b6;
+            margin-bottom: 0.5rem;
         }
         
-        .item-number {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 18px;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        .dashboard-item h2 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 22px;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 12px;
-            line-height: 1.3;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        .item-meta {
+        .visualizer {
+            height: 80px;
+            margin: 1.5rem 0;
             display: flex;
-            justify-content: flex-end;
+            justify-content: center;
             align-items: center;
-            margin-top: auto;
+            gap: 3px;
         }
         
-        .item-button {
-            background: var(--button-gradient);
+        .bar {
+            width: 6px;
+            background: #3498db;
+            border-radius: 5px;
+            transition: height 0.1s ease;
+        }
+        
+        .saved-transcripts {
+            margin-top: 2rem;
+        }
+        
+        .saved-transcripts h3 {
+            margin-bottom: 1rem;
+            color: #2c3e50;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 0.5rem;
+        }
+        
+        .transcript-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .transcript-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .transcript-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .transcript-name {
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .transcript-content {
+            font-size: 0.9rem;
+            color: #555;
+        }
+        
+        .delete-btn {
+            background: #e74c3c;
             color: white;
             border: none;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 14px;
-            font-weight: 600;
+            border-radius: 5px;
+            padding: 0.3rem 0.6rem;
             cursor: pointer;
-            transition: var(--transition), transform 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            font-size: 0.8rem;
         }
         
-        .item-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.5s ease;
-        }
-        
-        .item-button:hover {
-            background: var(--button-hover-gradient);
-            transform: translateY(-2px);
-        }
-        
-        .item-button:hover::before {
-            transform: translateX(100%);
-        }
-        
-        .modal {
+        .hidden {
             display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
-            overflow-y: auto;
-            backdrop-filter: blur(5px);
         }
         
-        .modal-content {
-            position: relative;
-            background-color: white;
-            margin: 5% auto;
-            padding: 40px;
-            width: 90%;
-            max-width: 900px;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: modalFadeIn 0.4s ease;
-        }
-        
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .close-btn {
-            position: absolute;
-            top: 20px;
-            right: 25px;
-            font-size: 28px;
-            font-weight: bold;
-            color: var(--gray);
-            cursor: pointer;
-            transition: var(--transition);
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-        }
-        
-        .close-btn:hover {
-            color: var(--dark);
-            background-color: #f5f5f5;
-        }
-        
-        .modal-header {
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #eaeaea;
-        }
-        
-        .modal-title {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 28px;
-            color: var(--primary);
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-        
-        .modal-subtitle {
-            font-size: 18px;
-            color: var(--gray);
-            line-height: 1.5;
-        }
-        
-        .modal-image {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 25px;
-            background: linear-gradient(135deg, #f0f2f5 0%, #e4e8ed 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--gray);
-            overflow: hidden;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        
-        .modal-image:hover {
-            transform: scale(1.02);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-        }
-        
-        .modal-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-        
-        .modal-body {
-            line-height: 1.7;
-        }
-        
-        .modal-body h3 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 20px;
-            color: var(--primary);
-            margin: 25px 0 15px;
-        }
-        
-        .modal-body p {
-            margin-bottom: 15px;
-        }
-        
-        .modal-body ul {
-            margin-left: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .modal-body li {
-            margin-bottom: 8px;
-            position: relative;
-            padding-left: 10px;
-        }
-        
-        .modal-body li::before {
-            content: '•';
-            color: var(--accent);
-            font-weight: bold;
-            position: absolute;
-            left: -15px;
-        }
-        
-        .image-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .image-modal-content {
-            max-width: 90%;
-            max-height: 90%;
-            position: relative;
-            animation: imageModalFadeIn 0.3s ease;
-        }
-        
-        @keyframes imageModalFadeIn {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        
-        .image-modal-content img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 8px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-        }
-        
-        .image-modal-close {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            font-size: 40px;
-            color: white;
-            cursor: pointer;
-            z-index: 2001;
-            background: rgba(0, 0, 0, 0.5);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-        }
-        
-        .image-modal-close:hover {
-            background: rgba(0, 0, 0, 0.7);
-            transform: scale(1.1);
-        }
-        
-        .image-modal-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 40px;
-            color: white;
-            cursor: pointer;
-            z-index: 2001;
-            background: rgba(0, 0, 0, 0.5);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-        }
-        
-        .image-modal-nav:hover {
-            background: rgba(0, 0, 0, 0.7);
-            transform: translateY(-50%) scale(1.1);
-        }
-        
-        .image-modal-prev {
-            left: 30px;
-        }
-        
-        .image-modal-next {
-            right: 30px;
-        }
-        
-        .image-modal-caption {
-            position: absolute;
-            bottom: 20px;
-            left: 0;
-            width: 100%;
-            text-align: center;
-            color: white;
-            font-size: 16px;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.5);
-        }
-        
-        @media (max-width: 768px) {
-            .title-box h1 {
-                font-size: 26px;
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.5rem;
             }
             
-            .modal-content {
-                padding: 25px;
-                width: 95%;
+            h1 {
+                font-size: 1.8rem;
             }
             
-            .project-head {
-                position: relative;
-                top: auto;
-                right: auto;
-                margin-top: 20px;
+            .controls {
+                flex-direction: column;
+                align-items: center;
             }
             
-            .image-modal-nav, .image-modal-close {
-                font-size: 30px;
-                width: 40px;
-                height: 40px;
+            button {
+                width: 100%;
             }
             
-            .image-modal-prev {
-                left: 15px;
+            .name-input {
+                flex-direction: column;
+                align-items: stretch;
             }
             
-            .image-modal-next {
-                right: 15px;
+            .name-input input {
+                width: 100%;
+                margin-bottom: 10px;
             }
             
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .dashboard-item {
-                height: 160px;
+            .language-selector {
+                flex-direction: column;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="date" id="current-date">Loading date...</div>
-        
         <header>
-            <div class="title-box">
-                <div class="flowing-lines">
-                    <div class="flowing-line" style="top: 20%; animation-delay: 0s;"></div>
-                    <div class="flowing-line" style="top: 40%; animation-delay: 2s;"></div>
-                    <div class="flowing-line" style="top: 60%; animation-delay: 4s;"></div>
-                    <div class="flowing-line" style="top: 80%; animation-delay: 6s;"></div>
-                </div>
-                <h1>SGX Vision Financial Year 2025-26</h1>
-                <p>Strategic Initiatives & Operational Excellence</p>
-            </div>
-            <div class="project-head">
-                <p>Project Head</p>
-                <h3>Mr. N. Arun Kumar</h3>
-            </div>
+            <h1>Multilingual Speech to Text</h1>
+            <p class="subtitle">Speak in English or Hindi and get real-time transcription</p>
         </header>
         
-        <main class="dashboard-grid">
-            <div class="dashboard-item" onclick="openModal(1)">
-                <div class="item-number">01</div>
-                <h2>METSO Plant Optimization</h2>
-                <div class="item-meta">
-                    <button class="item-button">View Details</button>
-                </div>
-            </div>
-            
-            <div class="dashboard-item" onclick="openModal(2)">
-                <div class="item-number">02</div>
-                <h2>VSI to Rivo Conversion</h2>
-                <div class="item-meta">
-                    <button class="item-button">View Details</button>
-                </div>
-            </div>
-            
-            <div class="dashboard-item" onclick="openModal(3)">
-                <div class="item-number">03</div>
-                <h2>Mining & Bench Planning</h2>
-                <div class="item-meta">
-                    <button class="item-button">View Details</button>
-                </div>
-            </div>
-            
-            <div class="dashboard-item" onclick="openModal(4)">
-                <div class="item-number">04</div>
-                <h2>Drilling & Blasting Agenda</h2>
-                <div class="item-meta">
-                    <button class="item-button">View Details</button>
-                </div>
-            </div>
-            
-            <div class="dashboard-item" onclick="openModal(5)">
-                <div class="item-number">05</div>
-                <h2>Operator Training Program</h2>
-                <div class="item-meta">
-                    <button class="item-button">View Details</button>
-                </div>
-            </div>
-            
-            <div class="dashboard-item" onclick="openModal(6)">
-                <div class="item-number">06</div>
-                <h2>Crusher Competitor Study</h2>
-                <div class="item-meta">
-                    <button class="item-button">View Details</button>
-                </div>
-            </div>
-            
-            <div class="dashboard-item" onclick="openModal(7)">
-                <div class="item-number">07</div>
-                <h2>Surveyor Appointment</h2>
-                <div class="item-meta">
-                    <button class="item-button">View Details</button>
-                </div>
-            </div>
-            
-            <div class="dashboard-item" onclick="openModal(8)">
-                <div class="item-number">08</div>
-                <h2>Plant Operational Time</h2>
-                <div class="item-meta">
-                    <button class="item-button">View Details</button>
-                </div>
-            </div>
-            
-            <div class="dashboard-item" onclick="openModal(9)">
-                <div class="item-number">09</div>
-                <h2>Alternate Access Road Plan</h2>
-                <div class="item-meta">
-                    <button class="item-button">View Details</button>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <div id="detailModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <div class="modal-header">
-                <h2 class="modal-title" id="modalTitle">Title</h2>
-                <p class="modal-subtitle" id="modalSubtitle">Subtitle</p>
-            </div>
-            <div class="modal-body" id="modalBody">
-                Detailed content will appear here.
+        <div class="language-section" id="language-section">
+            <h2>Choose Your Language</h2>
+            <p>Select the language you want to use for speech recognition</p>
+            <div class="language-selector">
+                <button class="lang-btn active" data-lang="en-US">English</button>
+                <button class="lang-btn" data-lang="hi-IN">Hindi</button>
             </div>
         </div>
-    </div>
-
-    <div id="imageModal" class="image-modal">
-        <span class="image-modal-close" onclick="closeImageModal()">&times;</span>
-        <span class="image-modal-nav image-modal-prev" onclick="changeImage(-1)">&#10094;</span>
-        <span class="image-modal-nav image-modal-next" onclick="changeImage(1)">&#10095;</span>
-        <div class="image-modal-content">
-            <img id="fullImage" src="" alt="Full size image">
-            <div class="image-modal-caption" id="imageCaption"></div>
+        
+        <div class="name-section hidden" id="name-section">
+            <h2 id="name-prompt">Please tell us your name</h2>
+            <p id="name-instruction">We'll use this to save your transcripts</p>
+            
+            <div class="audio-prompt" id="audio-prompt">
+                <h4 id="speak-name-title">Speak Your Name</h4>
+                <p id="audio-instruction">Click the button below and say your name</p>
+                <button id="listen-name-btn">Listen for Name</button>
+                <div class="status" id="name-status">Ready to listen for your name</div>
+            </div>
+            
+            <div class="name-input">
+                <input type="text" id="speaker-name" placeholder="Enter your name">
+                <button id="submit-name">Submit Name</button>
+            </div>
+        </div>
+        
+        <div id="main-section" class="hidden">
+            <div class="speaker-info" id="speaker-info">
+                <!-- Speaker name will appear here -->
+            </div>
+            
+            <div class="language-info" id="language-info">
+                <!-- Selected language will appear here -->
+            </div>
+            
+            <div class="controls">
+                <button id="start-btn">
+                    Start Listening
+                </button>
+                <button id="stop-btn" disabled>
+                    Stop Listening
+                </button>
+                <button id="translate-btn">
+                    Translate Text
+                </button>
+                <button id="save-btn">
+                    Save Transcript
+                </button>
+                <button id="clear-btn">
+                    Clear Text
+                </button>
+            </div>
+            
+            <div class="status" id="status">Press "Start Listening" to begin</div>
+            
+            <div class="visualizer" id="visualizer">
+                <!-- Audio bars will be generated here -->
+            </div>
+            
+            <div class="output-container">
+                <div id="transcript">
+                    Your transcribed text will appear here...
+                </div>
+                <div class="translated-text hidden" id="translated-text">
+                    <h4>Translated Text:</h4>
+                    <div id="translation-result"></div>
+                </div>
+            </div>
+            
+            <div class="saved-transcripts">
+                <h3>Saved Transcripts</h3>
+                <div class="transcript-list" id="transcript-list">
+                    <!-- Saved transcripts will appear here -->
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        // Set current date
-        const currentDate = new Date();
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        document.getElementById('current-date').textContent = currentDate.toLocaleDateString('en-US', options);
-        
-        // Create flowing lines for the title box
-        function createFlowingLines() {
-            const flowingLines = document.querySelector('.flowing-lines');
-            for (let i = 0; i < 8; i++) {
-                const line = document.createElement('div');
-                line.classList.add('flowing-line');
-                line.style.top = `${Math.random() * 100}%`;
-                line.style.width = `${20 + Math.random() * 60}%`;
-                line.style.animationDelay = `${Math.random() * 10}s`;
-                flowingLines.appendChild(line);
+        document.addEventListener('DOMContentLoaded', () => {
+            const languageSection = document.getElementById('language-section');
+            const nameSection = document.getElementById('name-section');
+            const mainSection = document.getElementById('main-section');
+            const speakerNameInput = document.getElementById('speaker-name');
+            const submitNameBtn = document.getElementById('submit-name');
+            const speakerInfo = document.getElementById('speaker-info');
+            const languageInfo = document.getElementById('language-info');
+            
+            const startBtn = document.getElementById('start-btn');
+            const stopBtn = document.getElementById('stop-btn');
+            const saveBtn = document.getElementById('save-btn');
+            const clearBtn = document.getElementById('clear-btn');
+            const translateBtn = document.getElementById('translate-btn');
+            const status = document.getElementById('status');
+            const transcript = document.getElementById('transcript');
+            const translatedText = document.getElementById('translated-text');
+            const translationResult = document.getElementById('translation-result');
+            const visualizer = document.getElementById('visualizer');
+            const transcriptList = document.getElementById('transcript-list');
+            
+            const langButtons = document.querySelectorAll('.lang-btn');
+            const namePrompt = document.getElementById('name-prompt');
+            const nameInstruction = document.getElementById('name-instruction');
+            const audioPrompt = document.getElementById('audio-prompt');
+            const speakNameTitle = document.getElementById('speak-name-title');
+            const audioInstruction = document.getElementById('audio-instruction');
+            const listenNameBtn = document.getElementById('listen-name-btn');
+            const nameStatus = document.getElementById('name-status');
+            
+            let speakerName = '';
+            let isListening = false;
+            let isListeningForName = false;
+            let currentTranscript = '';
+            let selectedLanguage = 'en-US';
+            let recognition;
+            let nameRecognition;
+            let speechSynthesis;
+            
+            // Language mapping
+            const languageMap = {
+                'en-US': 'English',
+                'hi-IN': 'Hindi'
+            };
+            
+            // Language-specific prompts
+            const namePrompts = {
+                'en-US': 'Please tell us your name',
+                'hi-IN': 'अपना नाम बताएं'
+            };
+            
+            const nameInstructions = {
+                'en-US': 'We\'ll use this to save your transcripts',
+                'hi-IN': 'हम इसे आपके ट्रांसक्रिप्ट को सहेजने के लिए उपयोग करेंगे'
+            };
+            
+            const speakNameTitles = {
+                'en-US': 'Speak Your Name',
+                'hi-IN': 'अपना नाम बोलें'
+            };
+            
+            const audioInstructions = {
+                'en-US': 'Click the button below and say your name',
+                'hi-IN': 'नीचे दिए गए बटन पर क्लिक करें और अपना नाम बोलें'
+            };
+            
+            const nameStatuses = {
+                'en-US': {
+                    ready: 'Ready to listen for your name',
+                    listening: 'Listening... Please say your name',
+                    success: 'Name captured successfully!',
+                    error: 'Could not understand. Please try again'
+                },
+                'hi-IN': {
+                    ready: 'आपका नाम सुनने के लिए तैयार',
+                    listening: 'सुन रहा हूं... कृपया अपना नाम बोलें',
+                    success: 'नाम सफलतापूर्वक कैप्चर किया गया!',
+                    error: 'समझ नहीं आया। कृपया पुनः प्रयास करें'
+                }
+            };
+            
+            const startButtonTexts = {
+                'en-US': 'Start Listening',
+                'hi-IN': 'सुनना शुरू करें'
+            };
+            
+            const stopButtonTexts = {
+                'en-US': 'Stop Listening',
+                'hi-IN': 'सुनना बंद करें'
+            };
+            
+            const translateButtonTexts = {
+                'en-US': 'Translate Text',
+                'hi-IN': 'टेक्स्ट अनुवाद करें'
+            };
+            
+            const saveButtonTexts = {
+                'en-US': 'Save Transcript',
+                'hi-IN': 'ट्रांसक्रिप्ट सहेजें'
+            };
+            
+            const clearButtonTexts = {
+                'en-US': 'Clear Text',
+                'hi-IN': 'टेक्स्ट साफ करें'
+            };
+            
+            const namePlaceholders = {
+                'en-US': 'Enter your name',
+                'hi-IN': 'अपना नाम दर्ज करें'
+            };
+            
+            const submitNameTexts = {
+                'en-US': 'Submit Name',
+                'hi-IN': 'नाम सबमिट करें'
+            };
+            
+            const listenNameButtonTexts = {
+                'en-US': 'Listen for Name',
+                'hi-IN': 'नाम सुनें'
+            };
+            
+            // Audio prompts for name input
+            const audioNamePrompts = {
+                'en-US': 'Please say your name',
+                'hi-IN': 'कृपया अपना नाम बोलें'
+            };
+            
+            // Welcome messages
+            const welcomeMessages = {
+                'en-US': 'Welcome to SGX Minerals. Please tell me your name.',
+                'hi-IN': 'एसजीएक्स मिनरल्स में आपका स्वागत है। कृपया अपना नाम बताएं।'
+            };
+            
+            // Check for browser support
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                status.textContent = 'Speech recognition not supported in this browser. Try Chrome, Edge, or Safari.';
+                startBtn.disabled = true;
+                translateBtn.disabled = true;
+                listenNameBtn.disabled = true;
+            } else {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRecognition();
+                nameRecognition = new SpeechRecognition();
+                
+                recognition.continuous = true;
+                recognition.interimResults = true;
+                recognition.lang = selectedLanguage;
+                
+                nameRecognition.continuous = false;
+                nameRecognition.interimResults = false;
+                nameRecognition.lang = selectedLanguage;
             }
-        }
-        
-        createFlowingLines();
-        
-        // Modal functionality
-        const modal = document.getElementById('detailModal');
-        const imageModal = document.getElementById('imageModal');
-        let currentImages = [];
-        let currentImageIndex = 0;
-        
-        function openModal(itemNumber) {
-            const itemData = getItemData(itemNumber);
             
-            document.getElementById('modalTitle').textContent = itemData.title;
-            document.getElementById('modalSubtitle').textContent = itemData.subtitle;
-            document.getElementById('modalBody').innerHTML = itemData.body;
+            // Check for speech synthesis support
+            if ('speechSynthesis' in window) {
+                speechSynthesis = window.speechSynthesis;
+            }
             
-            // Add click handlers to images in the modal
-            setTimeout(() => {
-                const modalImages = document.querySelectorAll('.modal-image img');
-                modalImages.forEach((img, index) => {
-                    img.addEventListener('click', () => {
-                        openImageModal(img.src, index);
-                    });
+            // Create visualizer bars
+            for (let i = 0; i < 30; i++) {
+                const bar = document.createElement('div');
+                bar.className = 'bar';
+                bar.style.height = '5px';
+                visualizer.appendChild(bar);
+            }
+            const bars = document.querySelectorAll('.bar');
+            
+            // Play welcome message on page load
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    speakWelcomeMessage();
+                }, 1000);
+            });
+            
+            // Language selection
+            langButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    langButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    selectedLanguage = button.getAttribute('data-lang');
+                    
+                    if (recognition) {
+                        recognition.lang = selectedLanguage;
+                        nameRecognition.lang = selectedLanguage;
+                    }
+                    
+                    // Update language-specific text
+                    updateLanguageTexts();
+                    
+                    // Show the name section
+                    nameSection.classList.remove('hidden');
+                    mainSection.classList.add('hidden');
+                    
+                    status.textContent = `Language set to ${languageMap[selectedLanguage]}`;
+                    
+                    // Automatically start the name listening process
+                    setTimeout(() => {
+                        startNameListening();
+                    }, 500);
                 });
-            }, 100);
+            });
             
-            modal.style.display = 'block';
-        }
-        
-        function closeModal() {
-            modal.style.display = 'none';
-        }
-        
-        function openImageModal(src, index) {
-            const modalImages = document.querySelectorAll('.modal-image img');
-            currentImages = Array.from(modalImages).map(img => ({
-                src: img.src,
-                alt: img.alt
-            }));
+            // Handle name submission
+            submitNameBtn.addEventListener('click', () => {
+                const name = speakerNameInput.value.trim();
+                if (name === '') {
+                    alert('Please enter your name');
+                    return;
+                }
+                
+                speakerName = name;
+                speakerInfo.textContent = `Speaker: ${speakerName}`;
+                languageInfo.textContent = `Language: ${languageMap[selectedLanguage]}`;
+                nameSection.classList.add('hidden');
+                mainSection.classList.remove('hidden');
+                
+                // Load saved transcripts for this user
+                loadSavedTranscripts();
+                
+                // Automatically start listening after getting the name
+                setTimeout(() => {
+                    startListening();
+                }, 1000);
+            });
             
-            currentImageIndex = index;
-            updateImageModal();
-            imageModal.style.display = 'flex';
-        }
-        
-        function closeImageModal() {
-            imageModal.style.display = 'none';
-        }
-        
-        function changeImage(direction) {
-            currentImageIndex += direction;
+            // Also allow Enter key to submit name
+            speakerNameInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    submitNameBtn.click();
+                }
+            });
             
-            if (currentImageIndex < 0) {
-                currentImageIndex = currentImages.length - 1;
-            } else if (currentImageIndex >= currentImages.length) {
-                currentImageIndex = 0;
+            // Listen for name using speech recognition
+            listenNameBtn.addEventListener('click', () => {
+                startNameListening();
+            });
+            
+            startBtn.addEventListener('click', () => {
+                startListening();
+            });
+            
+            stopBtn.addEventListener('click', () => {
+                stopListening();
+            });
+            
+            saveBtn.addEventListener('click', () => {
+                if (currentTranscript.trim() === '') {
+                    alert('No transcript to save!');
+                    return;
+                }
+                
+                const timestamp = new Date().toLocaleString();
+                const name = `${speakerName} - ${timestamp} (${languageMap[selectedLanguage]})`;
+                saveTranscript(name, currentTranscript);
+            });
+            
+            clearBtn.addEventListener('click', () => {
+                transcript.textContent = '';
+                currentTranscript = '';
+                translatedText.classList.add('hidden');
+                status.textContent = 'Transcript cleared.';
+            });
+            
+            translateBtn.addEventListener('click', async () => {
+                if (currentTranscript.trim() === '') {
+                    alert('No text to translate!');
+                    return;
+                }
+                
+                status.textContent = 'Translating...';
+                
+                try {
+                    // Using a free translation API (MyMemory)
+                    const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(currentTranscript)}&langpair=${selectedLanguage.split('-')[0]}|en`);
+                    const data = await response.json();
+                    
+                    if (data.responseStatus === 200) {
+                        translationResult.textContent = data.responseData.translatedText;
+                        translatedText.classList.remove('hidden');
+                        status.textContent = 'Translation completed.';
+                    } else {
+                        throw new Error('Translation failed');
+                    }
+                } catch (error) {
+                    console.error('Translation error:', error);
+                    status.textContent = 'Translation failed. Please try again.';
+                }
+            });
+            
+            if (nameRecognition) {
+                nameRecognition.onresult = (event) => {
+                    const name = event.results[0][0].transcript;
+                    speakerNameInput.value = name;
+                    nameStatus.textContent = nameStatuses[selectedLanguage].success;
+                    listenNameBtn.disabled = false;
+                    isListeningForName = false;
+                    
+                    // Automatically submit the name after a short delay
+                    setTimeout(() => {
+                        submitNameBtn.click();
+                    }, 1000);
+                };
+                
+                nameRecognition.onerror = (event) => {
+                    console.error('Name recognition error', event.error);
+                    nameStatus.textContent = nameStatuses[selectedLanguage].error;
+                    listenNameBtn.disabled = false;
+                    isListeningForName = false;
+                };
+                
+                nameRecognition.onend = () => {
+                    listenNameBtn.disabled = false;
+                    isListeningForName = false;
+                };
             }
             
-            updateImageModal();
-        }
-        
-        function updateImageModal() {
-            const fullImage = document.getElementById('fullImage');
-            const imageCaption = document.getElementById('imageCaption');
+            if (recognition) {
+                recognition.onresult = (event) => {
+                    let interimTranscript = '';
+                    let finalTranscript = '';
+                    
+                    for (let i = event.resultIndex; i < event.results.length; i++) {
+                        const transcriptPart = event.results[i][0].transcript;
+                        if (event.results[i].isFinal) {
+                            finalTranscript += transcriptPart;
+                            
+                            // Check for stop commands
+                            const text = transcriptPart.toLowerCase();
+                            if (text.includes('stop') || text.includes('stop listening')) {
+                                stopListening();
+                                return;
+                            }
+                        } else {
+                            interimTranscript += transcriptPart;
+                        }
+                    }
+                    
+                    currentTranscript = finalTranscript + interimTranscript;
+                    transcript.innerHTML = finalTranscript + '<i style="color:#e74c3c">' + interimTranscript + '</i>';
+                };
+                
+                recognition.onerror = (event) => {
+                    console.error('Speech recognition error', event.error);
+                    status.textContent = `Error: ${event.error}`;
+                    startBtn.disabled = false;
+                    stopBtn.disabled = true;
+                    isListening = false;
+                };
+                
+                recognition.onend = () => {
+                    if (isListening) {
+                        // If we're still supposed to be listening, restart
+                        recognition.start();
+                    } else {
+                        startBtn.disabled = false;
+                        stopBtn.disabled = true;
+                    }
+                };
+            }
             
-            if (currentImages.length > 0 && currentImageIndex < currentImages.length) {
-                fullImage.src = currentImages[currentImageIndex].src;
-                imageCaption.textContent = currentImages[currentImageIndex].alt || `Image ${currentImageIndex + 1} of ${currentImages.length}`;
+            function updateLanguageTexts() {
+                // Update all language-specific texts
+                namePrompt.textContent = namePrompts[selectedLanguage];
+                nameInstruction.textContent = nameInstructions[selectedLanguage];
+                speakNameTitle.textContent = speakNameTitles[selectedLanguage];
+                audioInstruction.textContent = audioInstructions[selectedLanguage];
+                nameStatus.textContent = nameStatuses[selectedLanguage].ready;
+                
+                startBtn.textContent = startButtonTexts[selectedLanguage];
+                stopBtn.textContent = stopButtonTexts[selectedLanguage];
+                translateBtn.textContent = translateButtonTexts[selectedLanguage];
+                saveBtn.textContent = saveButtonTexts[selectedLanguage];
+                clearBtn.textContent = clearButtonTexts[selectedLanguage];
+                
+                speakerNameInput.placeholder = namePlaceholders[selectedLanguage];
+                submitNameBtn.textContent = submitNameTexts[selectedLanguage];
+                listenNameBtn.textContent = listenNameButtonTexts[selectedLanguage];
             }
-        }
-        
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                closeModal();
+            
+            function speakWelcomeMessage() {
+                if (speechSynthesis) {
+                    const utterance = new SpeechSynthesisUtterance(welcomeMessages[selectedLanguage]);
+                    utterance.lang = selectedLanguage;
+                    utterance.rate = 0.9;
+                    speechSynthesis.speak(utterance);
+                    
+                    // Show the name section after the welcome message
+                    utterance.onend = () => {
+                        nameSection.classList.remove('hidden');
+                        startNameListening();
+                    };
+                } else {
+                    // If speech synthesis is not available, just show the name section
+                    nameSection.classList.remove('hidden');
+                    startNameListening();
+                }
             }
-            if (event.target == imageModal) {
-                closeImageModal();
+            
+            function startNameListening() {
+                if (!nameRecognition) {
+                    nameStatus.textContent = 'Speech recognition not available';
+                    return;
+                }
+                
+                // Speak the prompt in the selected language
+                if (speechSynthesis) {
+                    const utterance = new SpeechSynthesisUtterance(audioNamePrompts[selectedLanguage]);
+                    utterance.lang = selectedLanguage;
+                    utterance.rate = 0.9;
+                    speechSynthesis.speak(utterance);
+                    
+                    // Start listening after the prompt is spoken
+                    utterance.onend = () => {
+                        nameRecognition.start();
+                        listenNameBtn.disabled = true;
+                        nameStatus.textContent = nameStatuses[selectedLanguage].listening;
+                        isListeningForName = true;
+                    };
+                } else {
+                    // If speech synthesis is not available, just start listening
+                    nameRecognition.start();
+                    listenNameBtn.disabled = true;
+                    nameStatus.textContent = nameStatuses[selectedLanguage].listening;
+                    isListeningForName = true;
+                }
             }
-        }
-        
-        document.addEventListener('keydown', function(event) {
-            if (imageModal.style.display === 'flex') {
-                if (event.key === 'Escape') {
-                    closeImageModal();
-                } else if (event.key === 'ArrowLeft') {
-                    changeImage(-1);
-                } else if (event.key === 'ArrowRight') {
-                    changeImage(1);
+            
+            function startListening() {
+                if (!recognition) {
+                    status.textContent = 'Speech recognition not available';
+                    return;
+                }
+                
+                recognition.start();
+                startBtn.disabled = true;
+                stopBtn.disabled = false;
+                status.textContent = `Listening in ${languageMap[selectedLanguage]}... Speak now!`;
+                transcript.textContent = '';
+                currentTranscript = '';
+                isListening = true;
+                animateBars();
+            }
+            
+            function stopListening() {
+                if (!recognition) return;
+                
+                recognition.stop();
+                startBtn.disabled = false;
+                stopBtn.disabled = true;
+                status.textContent = 'Stopped listening.';
+                isListening = false;
+                
+                // Save the transcript automatically
+                if (currentTranscript.trim() !== '') {
+                    const timestamp = new Date().toLocaleString();
+                    const name = `${speakerName} - ${timestamp} (${languageMap[selectedLanguage]})`;
+                    saveTranscript(name, currentTranscript);
+                    status.textContent = 'Stopped listening and transcript saved.';
+                }
+            }
+            
+            function animateBars() {
+                if (!isListening) return;
+                
+                for (let i = 0; i < bars.length; i++) {
+                    // Random height to simulate audio input
+                    const height = Math.floor(Math.random() * 70) + 5;
+                    bars[i].style.height = `${height}px`;
+                }
+                
+                setTimeout(animateBars, 100);
+            }
+            
+            function saveTranscript(name, content) {
+                // Get existing transcripts from localStorage
+                const savedTranscripts = JSON.parse(localStorage.getItem('speechTranscripts') || '{}');
+                
+                // Add new transcript
+                savedTranscripts[name] = content;
+                
+                // Save back to localStorage
+                localStorage.setItem('speechTranscripts', JSON.stringify(savedTranscripts));
+                
+                // Update the UI
+                loadSavedTranscripts();
+                
+                status.textContent = `Transcript saved successfully`;
+            }
+            
+            function loadSavedTranscripts() {
+                const savedTranscripts = JSON.parse(localStorage.getItem('speechTranscripts') || '{}');
+                
+                // Clear the list
+                transcriptList.innerHTML = '';
+                
+                // Add each transcript to the list
+                for (const [name, content] of Object.entries(savedTranscripts)) {
+                    // Only show transcripts for the current speaker
+                    if (name.includes(speakerName)) {
+                        const transcriptItem = document.createElement('div');
+                        transcriptItem.className = 'transcript-item';
+                        
+                        const transcriptHeader = document.createElement('div');
+                        transcriptHeader.className = 'transcript-header';
+                        
+                        const transcriptName = document.createElement('div');
+                        transcriptName.className = 'transcript-name';
+                        transcriptName.textContent = name;
+                        
+                        const deleteBtn = document.createElement('button');
+                        deleteBtn.className = 'delete-btn';
+                        deleteBtn.textContent = 'Delete';
+                        deleteBtn.onclick = () => deleteTranscript(name);
+                        
+                        const transcriptContent = document.createElement('div');
+                        transcriptContent.className = 'transcript-content';
+                        transcriptContent.textContent = content.length > 100 ? content.substring(0, 100) + '...' : content;
+                        
+                        transcriptHeader.appendChild(transcriptName);
+                        transcriptHeader.appendChild(deleteBtn);
+                        transcriptItem.appendChild(transcriptHeader);
+                        transcriptItem.appendChild(transcriptContent);
+                        
+                        transcriptList.appendChild(transcriptItem);
+                    }
+                }
+                
+                // If no transcripts, show a message
+                if (transcriptList.children.length === 0) {
+                    transcriptList.innerHTML = '<p>No saved transcripts yet.</p>';
+                }
+            }
+            
+            function deleteTranscript(name) {
+                if (confirm(`Are you sure you want to delete the transcript "${name}"?`)) {
+                    const savedTranscripts = JSON.parse(localStorage.getItem('speechTranscripts') || '{}');
+                    delete savedTranscripts[name];
+                    localStorage.setItem('speechTranscripts', JSON.stringify(savedTranscripts));
+                    loadSavedTranscripts();
+                    status.textContent = `Transcript deleted.`;
                 }
             }
         });
-        
-        function getItemData(itemNumber) {
-            const data = {
-                1: {
-                    title: "METSO Plant Optimization",
-                    subtitle: "Internal Trial for 230 TPH including Railway Ballast Production",
-                    body: `
-                        <h3>Setting Details</h3>
-                        <ul>
-                            <li>Jaw CSS: 96 mm</li>
-                            <li>Cone CSS: 32 mm</li>
-                            <li>Screen Top: 60 mm - 6 nos</li>
-                            <li>Screen Bottom: 42 mm - 4 nos</li>
-                        </ul>
-                        
-                        <h3>Trial Results</h3>
-                        <div class="modal-image">
-                            <img src="https://raw.githubusercontent.com/bimal-bp/work_vision_sgx/main/Screenshot%202025-10-11%20124309.png" 
-                                 alt="Trial Results Analysis">
-                        </div>
-                        
-                        <h3>New Plan</h3>
-                        <div class="modal-image">
-                            <img src="https://raw.githubusercontent.com/bimal-bp/work_vision_sgx/main/Screenshot%202025-10-10%20174102.png" 
-                                 alt="Optimization Strategy">
-                        </div>
-
-                        <h3>New Conveyor Quotation</h3>
-                        <div class="modal-image">
-                            <img src="https://raw.githubusercontent.com/bimal-bp/work_vision_sgx/main/CONVEROYOR%20QUATION.png" 
-                                 alt="Conveyor Quotation">
-                        </div>
-                        
-                        <h3>Project Timeline</h3>
-                        <ul>
-                            <li>Expected Work Completion Date: 25/10/2025</li>
-                            <li>It will help to increase 20% Production</li>
-                        </ul>
-                    `
-                },
-                2: {
-                    title: "VSI to Rivo Conversion",
-                    subtitle: "100% Conversion of VSI to RIVO Sand",
-                    body: `
-                        <h3>Project Overview</h3>
-                        <p>Send an Enquiry for Sigma</p>
-                        <div class="modal-image">
-                            <img src="https://via.placeholder.com/800x400?text=VSI+to+Rivo+Conversion" 
-                                 alt="VSI to Rivo Conversion Diagram">
-                        </div>
-                    `
-                },
-                3: {
-                    title: "Mining & Bench Planning",
-                    subtitle: "Strategic planning for optimized mining operations and bench design",
-                    body: `
-                        <h3>Project Overview</h3>
-                        <p>This initiative focuses on developing comprehensive mining plans that maximize resource extraction while minimizing environmental impact and operational costs.</p>
-                        <div class="modal-image">
-                            <img src="https://via.placeholder.com/800x400?text=Mining+and+Bench+Planning" 
-                                 alt="Mining and Bench Planning">
-                        </div>
-                    `
-                },
-                4: {
-                    title: "Drilling & Blasting Agenda",
-                    subtitle: "Advanced techniques for precision drilling and controlled blasting",
-                    body: `
-                        <h3>Project Overview</h3>
-                        <p>Details for the drilling and blasting agenda will be updated soon.</p>
-                        <div class="modal-image">
-                            <img src="https://via.placeholder.com/800x400?text=Drilling+and+Blasting+Agenda" 
-                                 alt="Drilling and Blasting Agenda">
-                        </div>
-                    `
-                },
-                5: {
-                    title: "Operator Training Program",
-                    subtitle: "Comprehensive skill development for equipment operators",
-                    body: `
-                        <h3>Project Overview</h3>
-                        <p>Details for the operator training program will be updated soon.</p>
-                        <div class="modal-image">
-                            <img src="https://via.placeholder.com/800x400?text=Operator+Training+Program" 
-                                 alt="Operator Training Program">
-                        </div>
-                    `
-                },
-                6: {
-                    title: "Crusher Competitor Study",
-                    subtitle: "Market analysis of competing crushing technologies and methodologies",
-                    body: `
-                        <h3>Project Overview</h3>
-                        <p>Details for the crusher competitor study will be updated soon.</p>
-                        <div class="modal-image">
-                            <img src="https://via.placeholder.com/800x400?text=Crusher+Competitor+Study" 
-                                 alt="Crusher Competitor Study">
-                        </div>
-                    `
-                },
-                7: {
-                    title: "Surveyor Appointment",
-                    subtitle: "Strategic hiring and deployment of surveying professionals",
-                    body: `
-                        <h3>Project Overview</h3>
-                        <p>Details for the surveyor appointment will be updated soon.</p>
-                        <div class="modal-image">
-                            <img src="https://via.placeholder.com/800x400?text=Surveyor+Appointment" 
-                                 alt="Surveyor Appointment">
-                        </div>
-                    `
-                },
-                8: {
-                    title: "Plant Operational Time",
-                    subtitle: "Maximizing plant availability and operational efficiency",
-                    body: `
-                        <h3>Plant Running Hours</h3>
-                        <div class="modal-image">
-                            <img src="https://raw.githubusercontent.com/bimal-bp/work_vision_sgx/main/Screenshot%202025-10-11%20150117.png" 
-                                 alt="Plant Operational Time">
-                        </div>
-                    `
-                },
-                9: {
-                    title: "Alternate Access Road Plan",
-                    subtitle: "Development of secondary access routes for operational continuity",
-                    body: `
-                        <h3>Project Overview</h3>
-                        <p>Details for the alternate access road plan will be updated soon.</p>
-                        <div class="modal-image">
-                            <img src="https://via.placeholder.com/800x400?text=Alternate+Access+Road+Plan" 
-                                 alt="Alternate Access Road Plan">
-                        </div>
-                    `
-                }
-            };
-            
-            return data[itemNumber] || {
-                title: "Project " + itemNumber,
-                subtitle: "Details for project " + itemNumber,
-                body: "<p>Detailed information for this project will be available soon.</p>"
-            };
-        }
     </script>
 </body>
 </html>
