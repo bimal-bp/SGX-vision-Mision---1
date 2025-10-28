@@ -136,8 +136,10 @@ let speakerName = '';
 let selectedLanguage = 'en-US';
 let isListening = false;
 let isListeningForName = false;
-let currentTranscript = '';
-let fullTranscripts = {};
+
+/* ---- FULL TRANSCRIPT ACCUMULATION ---- */
+let fullTranscript = '';    // All finalized text
+let currentInterim = '';    // Current interim text
 
 const recognition = ('SpeechRecognition' in window) ? new SpeechRecognition() : new webkitSpeechRecognition();
 const nameRecognition = ('SpeechRecognition' in window) ? new SpeechRecognition() : new webkitSpeechRecognition();
@@ -212,7 +214,6 @@ langBtns.forEach(btn => {
         nameSection.classList.remove('hidden');
         mainSection.classList.add('hidden');
 
-        // 1. Speak welcome, then start name listening
         speak(welcomeMsg[selectedLanguage], selectedLanguage, startNameListening);
     });
 });
@@ -221,7 +222,7 @@ langBtns.forEach(btn => {
    NAME CAPTURE (Speech Only)
    ============================================================== */
 function startNameListening() {
-    if (isListeningForName || speakerName) return;          // already listening or name captured
+    if (isListeningForName || speakerName) return;
     nameRecognition.lang = selectedLanguage;
     nameRecognition.start();
     nameStatusDiv.textContent = nameStatus[selectedLanguage].ready;
@@ -233,7 +234,6 @@ function stopNameListening() {
     isListeningForName = false;
 }
 
-/* ---- RESULT ---- */
 nameRecognition.onresult = e => {
     const result = e.results[0][0].transcript.trim();
     if (result.length < 2) return;
@@ -242,7 +242,6 @@ nameRecognition.onresult = e => {
     nameStatusDiv.textContent = nameStatus[selectedLanguage].success;
     stopNameListening();
 
-    // 2. Say hello + start prompt, then go to main UI
     speak(helloMsg[selectedLanguage](speakerName), selectedLanguage, () => {
         setTimeout(() => {
             speak(startPrompt[selectedLanguage], selectedLanguage, () => {
@@ -261,13 +260,12 @@ nameRecognition.onerror = () => {
 };
 
 nameRecognition.onend = () => {
-    // If we were listening for a name and it stopped without a result, restart
     if (isListeningForName && !speakerName) {
         setTimeout(startNameListening, 500);
     }
 };
 
-/* ---- MANUAL FALLBACK ---- */
+/* ---- MANUAL NAME FALLBACK ---- */
 $('#submit-name').addEventListener('click', () => {
     const input = $('#speaker-name').value.trim();
     if (!input) return alert("Please enter your name");
@@ -286,7 +284,7 @@ $('#speaker-name').addEventListener('keypress', e => {
 });
 
 /* ==============================================================
-   MAIN UI
+   MAIN UI + AUTO-START LISTENING
    ============================================================== */
 function proceedToMainUI() {
     speakerInfo.textContent = `Speaker: ${speakerName}`;
@@ -294,38 +292,50 @@ function proceedToMainUI() {
     nameSection.classList.add('hidden');
     mainSection.classList.remove('hidden');
     loadSavedTranscripts();
-    statusDiv.textContent = `Say "stop" to finish and save.`;
+
+    // AUTO-START LISTENING
+    setTimeout(() => {
+        $('#start-btn').click();
+    }, 600);
 }
 
 /* ==============================================================
-   MAIN LISTENING + AUTO-SAVE
+   MAIN LISTENING + FULL TRANSCRIPT SAVE
    ============================================================== */
 $('#start-btn').addEventListener('click', startListening);
 $('#stop-btn').addEventListener('click', stopListening);
 $('#clear-btn').addEventListener('click', () => {
     transcriptDiv.textContent = '';
-    currentTranscript = '';
+    fullTranscript = '';
+    currentInterim = '';
     $('#translated-text').classList.add('hidden');
 });
 $('#translate-btn').addEventListener('click', translateText);
 
+/* ---- FULL TRANSCRIPT BUILDER ---- */
 recognition.onresult = e => {
-    let final = '', interim = '';
+    let final = '';
+    let interim = '';
+
     for (let i = e.resultIndex; i < e.results.length; i++) {
-        const t = e.results[i][0].transcript;
+        const t = e.results[i][0].transcript.trim();
+
         if (e.results[i].isFinal) {
             final += t + ' ';
-            const low = t.toLowerCase();
-            if (low.includes('stop') || low.includes('band karo')) {
-                stopListening();
-                return;
-            }
+            fullTranscript += t + ' ';  // Accumulate every final word
         } else {
-            interim += t;
+            interim = t;
         }
     }
-    currentTranscript = final + interim;
-    transcriptDiv.innerHTML = final + `<i style="color:#e74c3c">${interim}</i>`;
+
+    const low = (final + interim).toLowerCase();
+    if (low.includes('stop') || low.includes('band karo')) {
+        stopListening();
+        return;
+    }
+
+    currentInterim = interim;
+    transcriptDiv.innerHTML = fullTranscript + `<i style="color:#e74c3c">${interim}</i>`;
 };
 
 recognition.onerror = () => {
@@ -346,7 +356,8 @@ function startListening() {
     $('#stop-btn').disabled = false;
     statusDiv.textContent = `Listening in ${langMap[selectedLanguage]}… Say "stop" to save.`;
     transcriptDiv.textContent = '';
-    currentTranscript = '';
+    fullTranscript = '';
+    currentInterim = '';
     isListening = true;
     animateBars();
 }
@@ -358,14 +369,19 @@ function stopListening() {
     $('#stop-btn').disabled = true;
     isListening = false;
 
-    if (currentTranscript.trim()) {
+    const finalText = (fullTranscript + currentInterim).trim();
+
+    if (finalText) {
         const ts = new Date().toLocaleString();
         const key = `${speakerName} - ${ts} (${langMap[selectedLanguage]})`;
-        saveTranscript(key, currentTranscript.trim());
+        saveTranscript(key, finalText);
         statusDiv.textContent = `Stopped & saved as "${speakerName}"`;
     } else {
         statusDiv.textContent = 'Stopped. Nothing to save.';
     }
+
+    fullTranscript = '';
+    currentInterim = '';
 }
 
 /* ==============================================================
@@ -380,7 +396,6 @@ function animateBars() {
 function saveTranscript(key, text) {
     const store = JSON.parse(localStorage.getItem('sgxTranscripts') || '{}');
     store[key] = text;
-    fullTranscripts[key] = text;
     localStorage.setItem('sgxTranscripts', JSON.stringify(store));
     loadSavedTranscripts();
 }
@@ -443,11 +458,12 @@ function deleteTranscript(key) {
    TRANSLATION
    ============================================================== */
 async function translateText() {
-    if (!currentTranscript.trim()) return alert('Nothing to translate');
+    const text = (fullTranscript + currentInterim).trim();
+    if (!text) return alert('Nothing to translate');
     statusDiv.textContent = 'Translating…';
     try {
         const src = selectedLanguage.split('-')[0];
-        const resp = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(currentTranscript)}&langpair=${src}|en`);
+        const resp = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${src}|en`);
         const data = await resp.json();
         if (data.responseStatus === 200) {
             $('#translation-result').textContent = data.responseData.translatedText;
