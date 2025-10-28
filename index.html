@@ -25,9 +25,8 @@ button {padding:.8rem 1.5rem;font-size:1rem;border:none;border-radius:8px;cursor
 .controls {display:flex;gap:1rem;margin-bottom:2rem;justify-content:center;flex-wrap:wrap;}
 #start-btn {background:#2ecc71;color:#fff;}
 #stop-btn {background:#e74c3c;color:#fff;}
-#save-btn {background:#3498db;color:#fff;}
-#clear-btn {background:#95a5a6;color:#fff;}
 #translate-btn {background:#9b59b6;color:#fff;}
+#clear-btn {background:#95a5a6;color:#fff;}
 button:hover {transform:translateY(-2px);box-shadow:0 4px 8px rgba(0,0,0,.1);}
 button:disabled {opacity:.6;cursor:not-allowed;transform:none;box-shadow:none;}
 .status {text-align:center;margin-bottom:1.5rem;font-size:1.1rem;height:1.5rem;color:#7f8c8d;}
@@ -75,25 +74,25 @@ button:disabled {opacity:.6;cursor:not-allowed;transform:none;box-shadow:none;}
         </div>
     </div>
 
-    <!-- ==== NAME INPUT (hidden until language chosen) ==== -->
+    <!-- ==== NAME SECTION (Auto-listen after welcome) ==== -->
     <div class="name-section hidden" id="name-section">
         <h2 id="name-prompt">Please tell us your name</h2>
         <p id="name-instruction">We'll use this to save your transcripts</p>
 
         <div class="audio-prompt" id="audio-prompt">
             <h4 id="speak-name-title">Speak Your Name</h4>
-            <p id="audio-instruction">Click the button below and say your name</p>
-            <button id="listen-name-btn">Listen for Name</button>
-            <div class="status" id="name-status">Ready to listen for your name</div>
+            <p id="audio-instruction">Listening for your name...</p>
+            <div class="status" id="name-status">Ready to listen...</div>
         </div>
 
-        <div class="name-input">
+        <!-- Optional fallback manual input -->
+        <div class="name-input hidden" id="manual-name-input">
             <input type="text" id="speaker-name" placeholder="Enter your name">
             <button id="submit-name">Submit Name</button>
         </div>
     </div>
 
-    <!-- ==== MAIN UI (hidden until name entered) ==== -->
+    <!-- ==== MAIN UI ==== -->
     <div id="main-section" class="hidden">
         <div class="speaker-info" id="speaker-info"></div>
         <div class="language-info" id="language-info"></div>
@@ -102,7 +101,6 @@ button:disabled {opacity:.6;cursor:not-allowed;transform:none;box-shadow:none;}
             <button id="start-btn">Start Listening</button>
             <button id="stop-btn" disabled>Stop Listening</button>
             <button id="translate-btn">Translate Text</button>
-            <button id="save-btn">Save Transcript</button>
             <button id="clear-btn">Clear Text</button>
         </div>
 
@@ -146,30 +144,25 @@ recognition.interimResults = true;
 nameRecognition.continuous = false;
 nameRecognition.interimResults = false;
 
-/* ---- LANGUAGE MAPS (texts) ---- */
+/* ---- LANGUAGE MAPS ---- */
 const langMap = { 'en-US':'English', 'hi-IN':'Hindi' };
-const welcomeMsg = { 'en-US':'Welcome to SGX Minerals. Please tell me your name.',
-                    'hi-IN':'एसजीएक्स मिनरल्स में आपका स्वागत है। कृपया अपना नाम बताएं।' };
-const namePrompts = { 'en-US':'Please tell us your name', 'hi-IN':'अपना नाम बताएं' };
-const nameInstr  = { 'en-US':'We\'ll use this to save your transcripts',
-                    'hi-IN':'हम इसे आपके ट्रांसक्रिप्ट को सहेजने के लिए उपयोग करेंगे' };
-const speakTitle = { 'en-US':'Speak Your Name', 'hi-IN':'अपना नाम बोलें' };
-const audioInstr = { 'en-US':'Click the button below and say your name',
-                    'hi-IN':'नीचे दिए गए बटन पर क्लिक करें और अपना नाम बोलें' };
+const welcomeMsg = { 
+    'en-US':'Welcome to SGX Minerals. Please say your name now.',
+    'hi-IN':'एसजीएक्स मिनरल्स में आपका स्वागत है। कृपया अपना नाम बोलें।'
+};
+const namePrompts = { 'en-US':'Please say your name', 'hi-IN':'अपना नाम बोलें' };
+const nameInstr  = { 'en-US':'We\'ll save your transcript with this name',
+                    'hi-IN':'हम इस नाम से आपका ट्रांसक्रिप्ट सहेजेंगे' };
 const nameStatus = {
-    'en-US':{ready:'Ready to listen for your name',listening:'Listening… say your name',success:'Name captured!',error:'Could not understand. Try again'},
-    'hi-IN':{ready:'आपका नाम सुनने के लिए तैयार',listening:'सुन रहा हूं… अपना नाम बोलें',success:'नाम सफलतापूर्वक कैप्चर!',error:'समझ नहीं आया। फिर कोशिश करें'}
+    'en-US':{ready:'Listening for your name...', success:'Name captured!', error:'Could not hear name. Try again.'},
+    'hi-IN':{ready:'आपका नाम सुन रहा हूं...', success:'नाम मिल गया!', error:'नाम नहीं सुनाई दिया। फिर बोलें।'}
 };
 const btnTexts = {
     start:{'en-US':'Start Listening','hi-IN':'सुनना शुरू करें'},
     stop:{'en-US':'Stop Listening','hi-IN':'सुनना बंद करें'},
     translate:{'en-US':'Translate Text','hi-IN':'टेक्स्ट अनुवाद करें'},
-    save:{'en-US':'Save Transcript','hi-IN':'ट्रांसक्रिप्ट सहेजें'},
-    clear:{'en-US':'Clear Text','hi-IN':'टेक्स्ट साफ करें'},
-    listenName:{'en-US':'Listen for Name','hi-IN':'नाम सुनें'},
-    submit:{'en-US':'Submit Name','hi-IN':'नाम सबमिट करें'}
+    clear:{'en-US':'Clear Text','hi-IN':'टेक्स्ट साफ करें'}
 };
-const placeholders = {'en-US':'Enter your name','hi-IN':'अपना नाम दर्ज करें'};
 
 /* ---- UI ELEMENTS ---- */
 const langBtns          = $$('.lang-btn');
@@ -182,8 +175,9 @@ const statusDiv         = $('#status');
 const nameStatusDiv     = $('#name-status');
 const visualizer        = $('#visualizer');
 const transcriptList    = $('#transcript-list');
+const manualNameInput   = $('#manual-name-input');
 
-/* ---- CREATE VISUALIZER BARS ---- */
+/* ---- VISUALIZER BARS ---- */
 for(let i=0;i<30;i++){
     const bar = document.createElement('div');
     bar.className='bar';
@@ -193,11 +187,11 @@ for(let i=0;i<30;i++){
 const bars = $$('.bar');
 
 /* ==============================================================
-   LANGUAGE SELECTION
+   LANGUAGE SELECTION → WELCOME → AUTO NAME LISTEN
    ============================================================== */
-langBtns.forEach(btn=>{
-    btn.addEventListener('click',()=>{
-        langBtns.forEach(b=>b.classList.remove('active'));
+langBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        langBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         selectedLanguage = btn.dataset.lang;
 
@@ -207,220 +201,242 @@ langBtns.forEach(btn=>{
         nameSection.classList.remove('hidden');
         mainSection.classList.add('hidden');
 
-        // ---- WELCOME VOICE + AUTO START NAME LISTENING ----
-        speak(welcomeMsg[selectedLanguage], selectedLanguage, ()=>{
-            startNameListening();
+        // Welcome + Auto-start name listening
+        speak(welcomeMsg[selectedLanguage], selectedLanguage, () => {
+            setTimeout(startNameListening, 800);
         });
     });
 });
 
 /* ==============================================================
-   NAME INPUT (speech or manual)
+   NAME CAPTURE (Speech Only)
    ============================================================== */
-$('#listen-name-btn').addEventListener('click', startNameListening);
-$('#submit-name').addEventListener('click', submitName);
-$('#speaker-name').addEventListener('keypress', e=>{ if(e.key==='Enter') submitName(); });
+nameRecognition.onresult = e => {
+    speakerName = e.results[0][0].transcript.trim();
+    if (speakerName.length < 2) return; // too short
 
-function submitName(){
-    const manual = $('#speaker-name').value.trim();
-    if(!manual && !speakerName){ alert('Please enter or speak your name'); return; }
-    speakerName = manual || speakerName;
+    nameStatusDiv.textContent = nameStatus[selectedLanguage].success;
+    stopNameListening();
+
+    // Auto-proceed to main UI
+    setTimeout(() => {
+        proceedToMainUI();
+    }, 1000);
+};
+
+nameRecognition.onerror = () => {
+    nameStatusDiv.textContent = nameStatus[selectedLanguage].error;
+    setTimeout(() => {
+        manualNameInput.classList.remove('hidden');
+        nameStatusDiv.textContent = "Type your name below:";
+    }, 1500);
+};
+
+nameRecognition.onend = () => {
+    if (isListeningForName) {
+        setTimeout(startNameListening, 500); // retry
+    }
+};
+
+function startNameListening() {
+    if (isListeningForName || speakerName) return;
+    nameRecognition.lang = selectedLanguage;
+    nameRecognition.start();
+    nameStatusDiv.textContent = nameStatus[selectedLanguage].ready;
+    isListeningForName = true;
+}
+
+function stopNameListening() {
+    nameRecognition.stop();
+    isListeningForName = false;
+}
+
+function proceedToMainUI() {
     speakerInfo.textContent = `Speaker: ${speakerName}`;
     languageInfo.textContent = `Language: ${langMap[selectedLanguage]}`;
     nameSection.classList.add('hidden');
     mainSection.classList.remove('hidden');
     loadSavedTranscripts();
-    setTimeout(startListening,800);
+    setTimeout(startListening, 1000);
 }
 
-/* ---- NAME RECOGNITION ---- */
-nameRecognition.onresult = e=>{
-    speakerName = e.results[0][0].transcript.trim();
-    $('#speaker-name').value = speakerName;
-    nameStatusDiv.textContent = nameStatus[selectedLanguage].success;
-    stopNameListening();
-    setTimeout(submitName,800);
-};
-nameRecognition.onerror = e=>{
-    console.error(e);
-    nameStatusDiv.textContent = nameStatus[selectedLanguage].error;
-    stopNameListening();
-};
-nameRecognition.onend = ()=> stopNameListening();
+/* Optional manual submit (fallback) */
+$('#submit-name').addEventListener('click', () => {
+    const input = $('#speaker-name').value.trim();
+    if (!input) return alert("Please enter your name");
+    speakerName = input;
+    proceedToMainUI();
+});
+$('#speaker-name').addEventListener('keypress', e => {
+    if (e.key === 'Enter') $('#submit-name').click();
+});
 
 /* ==============================================================
-   MAIN LISTENING
+   MAIN LISTENING + AUTO-SAVE ON "STOP"
    ============================================================== */
 $('#start-btn').addEventListener('click', startListening);
 $('#stop-btn').addEventListener('click', stopListening);
-$('#clear-btn').addEventListener('click',()=>{ transcriptDiv.textContent=''; currentTranscript=''; $('#translated-text').classList.add('hidden'); });
-$('#save-btn').addEventListener('click',()=>{ if(currentTranscript.trim()) saveTranscript(); else alert('Nothing to save'); });
+$('#clear-btn').addEventListener('click', () => {
+    transcriptDiv.textContent = '';
+    currentTranscript = '';
+    $('#translated-text').classList.add('hidden');
+});
 $('#translate-btn').addEventListener('click', translateText);
 
-/* ---- RECOGNITION HANDLERS ---- */
-recognition.onresult = e=>{
+recognition.onresult = e => {
     let final = '', interim = '';
-    for(let i=e.resultIndex;i<e.results.length;i++){
+    for (let i = e.resultIndex; i < e.results.length; i++) {
         const t = e.results[i][0].transcript;
-        if(e.results[i].isFinal){
-            final += t;
+        if (e.results[i].isFinal) {
+            final += t + ' ';
             const low = t.toLowerCase();
-            if(low.includes('stop')||low.includes('stop listening')){ stopListening(); return; }
-        }else interim += t;
+            if (low.includes('stop') || low.includes('band karo')) {
+                stopListening();
+                return;
+            }
+        } else {
+            interim += t;
+        }
     }
     currentTranscript = final + interim;
     transcriptDiv.innerHTML = final + `<i style="color:#e74c3c">${interim}</i>`;
 };
-recognition.onerror = e=>{
-    console.error(e);
-    statusDiv.textContent = `Error: ${e.error}`;
-    stopListening();
+
+recognition.onerror = () => {
+    statusDiv.textContent = 'Error occurred. Restarting...';
+    setTimeout(startListening, 1000);
 };
-recognition.onend = ()=>{
-    if(isListening) recognition.start();
-    else { $('#start-btn').disabled=false; $('#stop-btn').disabled=true; }
+
+recognition.onend = () => {
+    if (isListening) recognition.start();
 };
 
 /* ==============================================================
-   HELPERS
+   LISTENING CONTROL
    ============================================================== */
-function updateAllTexts(){
+function startListening() {
+    if (isListening) return;
+    recognition.lang = selectedLanguage;
+    recognition.start();
+    $('#start-btn').disabled = true;
+    $('#stop-btn').disabled = false;
+    statusDiv.textContent = `Listening in ${langMap[selectedLanguage]}… Say "stop" to save.`;
+    transcriptDiv.textContent = '';
+    currentTranscript = '';
+    isListening = true;
+    animateBars();
+}
+
+function stopListening() {
+    if (!isListening) return;
+    recognition.stop();
+    $('#start-btn').disabled = false;
+    $('#stop-btn').disabled = true;
+    isListening = false;
+
+    if (currentTranscript.trim()) {
+        const ts = new Date().toLocaleString();
+        const key = `${speakerName} - ${ts} (${langMap[selectedLanguage]})`;
+        saveTranscript(key, currentTranscript.trim());
+        statusDiv.textContent = `Stopped & saved as "${speakerName}"`;
+    } else {
+        statusDiv.textContent = 'Stopped. Nothing to save.';
+    }
+}
+
+/* ==============================================================
+   VISUALIZER + STORAGE
+   ============================================================== */
+function animateBars() {
+    if (!isListening) return;
+    bars.forEach(b => b.style.height = `${Math.random() * 70 + 5}px`);
+    setTimeout(animateBars, 100);
+}
+
+function saveTranscript(key, text) {
+    const store = JSON.parse(localStorage.getItem('sgxTranscripts') || '{}');
+    store[key] = text;
+    localStorage.setItem('sgxTranscripts', JSON.stringify(store));
+    loadSavedTranscripts();
+}
+
+function loadSavedTranscripts() {
+    const store = JSON.parse(localStorage.getItem('sgxTranscripts') || '{}');
+    transcriptList.innerHTML = '';
+    let found = false;
+    for (const [k, v] of Object.entries(store)) {
+        if (k.includes(speakerName)) {
+            found = true;
+            const item = document.createElement('div');
+            item.className = 'transcript-item';
+            const header = document.createElement('div');
+            header.className = 'transcript-header';
+            const name = document.createElement('div');
+            name.className = 'transcript-name';
+            name.textContent = k;
+            const del = document.createElement('button');
+            del.className = 'delete-btn';
+            del.textContent = 'Delete';
+            del.onclick = () => deleteTranscript(k);
+            header.append(name, del);
+            const content = document.createElement('div');
+            content.className = 'transcript-content';
+            content.textContent = v.length > 120 ? v.slice(0, 120) + '...' : v;
+            item.append(header, content);
+            transcriptList.appendChild(item);
+        }
+    }
+    if (!found) transcriptList.innerHTML = '<p>No saved transcripts yet.</p>';
+}
+
+function deleteTranscript(key) {
+    if (!confirm(`Delete "${key}"?`)) return;
+    const store = JSON.parse(localStorage.getItem('sgxTranscripts') || '{}');
+    delete store[key];
+    localStorage.setItem('sgxTranscripts', JSON.stringify(store));
+    loadSavedTranscripts();
+}
+
+/* ==============================================================
+   TRANSLATION
+   ============================================================== */
+async function translateText() {
+    if (!currentTranscript.trim()) return alert('Nothing to translate');
+    statusDiv.textContent = 'Translating…';
+    try {
+        const src = selectedLanguage.split('-')[0];
+        const resp = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(currentTranscript)}&langpair=${src}|en`);
+        const data = await resp.json();
+        if (data.responseStatus === 200) {
+            $('#translation-result').textContent = data.responseData.translatedText;
+            $('#translated-text').classList.remove('hidden');
+            statusDiv.textContent = 'Translated to English.';
+        } else throw new Error();
+    } catch {
+        statusDiv.textContent = 'Translation failed.';
+    }
+}
+
+/* ==============================================================
+   UTILS
+   ============================================================== */
+function updateAllTexts() {
     $('#name-prompt').textContent = namePrompts[selectedLanguage];
     $('#name-instruction').textContent = nameInstr[selectedLanguage];
-    $('#speak-name-title').textContent = speakTitle[selectedLanguage];
-    $('#audio-instruction').textContent = audioInstr[selectedLanguage];
-    nameStatusDiv.textContent = nameStatus[selectedLanguage].ready;
-
     $('#start-btn').textContent = btnTexts.start[selectedLanguage];
     $('#stop-btn').textContent = btnTexts.stop[selectedLanguage];
     $('#translate-btn').textContent = btnTexts.translate[selectedLanguage];
-    $('#save-btn').textContent = btnTexts.save[selectedLanguage];
     $('#clear-btn').textContent = btnTexts.clear[selectedLanguage];
-    $('#listen-name-btn').textContent = btnTexts.listenName[selectedLanguage];
-    $('#submit-name').textContent = btnTexts.submit[selectedLanguage];
-    $('#speaker-name').placeholder = placeholders[selectedLanguage];
 }
 
-function speak(text, lang, onEnd){
-    if(!('speechSynthesis' in window)) return onEnd?.();
+function speak(text, lang, onEnd) {
+    if (!('speechSynthesis' in window)) return onEnd?.();
     const ut = new SpeechSynthesisUtterance(text);
     ut.lang = lang;
     ut.rate = 0.9;
     ut.onend = onEnd;
     speechSynthesis.cancel();
     speechSynthesis.speak(ut);
-}
-
-function startNameListening(){
-    if(isListeningForName) return;
-    nameRecognition.lang = selectedLanguage;
-    speak(audioInstr[selectedLanguage], selectedLanguage, ()=>{
-        nameRecognition.start();
-        $('#listen-name-btn').disabled = true;
-        nameStatusDiv.textContent = nameStatus[selectedLanguage].listening;
-        isListeningForName = true;
-    });
-}
-function stopNameListening(){
-    nameRecognition.stop();
-    $('#listen-name-btn').disabled = false;
-    isListeningForName = false;
-}
-
-function startListening(){
-    if(isListening) return;
-    recognition.lang = selectedLanguage;
-    recognition.start();
-    $('#start-btn').disabled = true;
-    $('#stop-btn').disabled = false;
-    statusDiv.textContent = `Listening in ${langMap[selectedLanguage]}…`;
-    transcriptDiv.textContent = '';
-    currentTranscript = '';
-    isListening = true;
-    animateBars();
-}
-function stopListening(){
-    if(!isListening) return;
-    recognition.stop();
-    $('#start-btn').disabled = false;
-    $('#stop-btn').disabled = true;
-    statusDiv.textContent = 'Stopped.';
-    isListening = false;
-    if(currentTranscript.trim()){
-        const ts = new Date().toLocaleString();
-        const key = `${speakerName} - ${ts} (${langMap[selectedLanguage]})`;
-        saveTranscript(key, currentTranscript);
-        statusDiv.textContent = 'Stopped & saved.';
-    }
-}
-
-/* ---- VISUALIZER ---- */
-function animateBars(){
-    if(!isListening) return;
-    bars.forEach(b=>b.style.height = `${Math.random()*70+5}px`);
-    setTimeout(animateBars,100);
-}
-
-/* ---- LOCAL STORAGE (per speaker) ---- */
-function saveTranscript(key, text){
-    const store = JSON.parse(localStorage.getItem('sgxTranscripts')||'{}');
-    store[key] = text;
-    localStorage.setItem('sgxTranscripts', JSON.stringify(store));
-    loadSavedTranscripts();
-    statusDiv.textContent = 'Saved!';
-}
-function loadSavedTranscripts(){
-    const store = JSON.parse(localStorage.getItem('sgxTranscripts')||'{}');
-    transcriptList.innerHTML = '';
-    let found = false;
-    for(const [k, v] of Object.entries(store)){
-        if(k.startsWith(speakerName)){
-            found = true;
-            const item = document.createElement('div');
-            item.className='transcript-item';
-            const header = document.createElement('div');
-            header.className='transcript-header';
-            const name = document.createElement('div');
-            name.className='transcript-name';
-            name.textContent = k;
-            const del = document.createElement('button');
-            del.className='delete-btn';
-            del.textContent='Delete';
-            del.onclick=()=>deleteTranscript(k);
-            header.append(name,del);
-            const content = document.createElement('div');
-            content.className='transcript-content';
-            content.textContent = v.length>100 ? v.slice(0,100)+'...' : v;
-            item.append(header,content);
-            transcriptList.appendChild(item);
-        }
-    }
-    if(!found) transcriptList.innerHTML = '<p>No saved transcripts yet.</p>';
-}
-function deleteTranscript(key){
-    if(!confirm(`Delete "${key}"?`)) return;
-    const store = JSON.parse(localStorage.getItem('sgxTranscripts')||'{}');
-    delete store[key];
-    localStorage.setItem('sgxTranscripts', JSON.stringify(store));
-    loadSavedTranscripts();
-}
-
-/* ---- TRANSLATION (MyMemory – free) ---- */
-async function translateText(){
-    if(!currentTranscript.trim()){ alert('Nothing to translate'); return; }
-    statusDiv.textContent='Translating…';
-    try{
-        const src = selectedLanguage.split('-')[0];
-        const resp = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(currentTranscript)}&langpair=${src}|en`);
-        const data = await resp.json();
-        if(data.responseStatus===200){
-            $('#translation-result').textContent = data.responseData.translatedText;
-            $('#translated-text').classList.remove('hidden');
-            statusDiv.textContent='Translated.';
-        }else throw new Error();
-    }catch{
-        statusDiv.textContent='Translation failed.';
-    }
 }
 </script>
 </body>
