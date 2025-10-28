@@ -76,7 +76,7 @@ button:disabled {opacity:.6;cursor:not-allowed;transform:none;box-shadow:none;}
         </div>
     </div>
 
-    <!-- ==== NAME SECTION (Auto-listen after welcome) ==== -->
+    <!-- ==== NAME SECTION ==== -->
     <div class="name-section hidden" id="name-section">
         <h2 id="name-prompt">Please tell us your name</h2>
         <p id="name-instruction">We'll use this to save your transcripts</p>
@@ -87,7 +87,7 @@ button:disabled {opacity:.6;cursor:not-allowed;transform:none;box-shadow:none;}
             <div class="status" id="name-status">Ready to listen...</div>
         </div>
 
-        <!-- Optional fallback manual input -->
+        <!-- Fallback manual input -->
         <div class="name-input hidden" id="manual-name-input">
             <input type="text" id="speaker-name" placeholder="Enter your name">
             <button id="submit-name">Submit Name</button>
@@ -137,7 +137,7 @@ let selectedLanguage = 'en-US';
 let isListening = false;
 let isListeningForName = false;
 let currentTranscript = '';
-let fullTranscripts = {}; // To store full text
+let fullTranscripts = {};
 
 const recognition = ('SpeechRecognition' in window) ? new SpeechRecognition() : new webkitSpeechRecognition();
 const nameRecognition = ('SpeechRecognition' in window) ? new SpeechRecognition() : new webkitSpeechRecognition();
@@ -212,27 +212,39 @@ langBtns.forEach(btn => {
         nameSection.classList.remove('hidden');
         mainSection.classList.add('hidden');
 
-        // Welcome + Auto-start name listening
-        speak(welcomeMsg[selectedLanguage], selectedLanguage, () => {
-            setTimeout(startNameListening, 800);
-        });
+        // 1. Speak welcome, then start name listening
+        speak(welcomeMsg[selectedLanguage], selectedLanguage, startNameListening);
     });
 });
 
 /* ==============================================================
    NAME CAPTURE (Speech Only)
    ============================================================== */
-nameRecognition.onresult = e => {
-    speakerName = e.results[0][0].transcript.trim();
-    if (speakerName.length < 2) return;
+function startNameListening() {
+    if (isListeningForName || speakerName) return;          // already listening or name captured
+    nameRecognition.lang = selectedLanguage;
+    nameRecognition.start();
+    nameStatusDiv.textContent = nameStatus[selectedLanguage].ready;
+    isListeningForName = true;
+}
 
+function stopNameListening() {
+    nameRecognition.stop();
+    isListeningForName = false;
+}
+
+/* ---- RESULT ---- */
+nameRecognition.onresult = e => {
+    const result = e.results[0][0].transcript.trim();
+    if (result.length < 2) return;
+
+    speakerName = result;
     nameStatusDiv.textContent = nameStatus[selectedLanguage].success;
     stopNameListening();
 
-    // === NEW: Say "Hello [Name], we can start now." ===
+    // 2. Say hello + start prompt, then go to main UI
     speak(helloMsg[selectedLanguage](speakerName), selectedLanguage, () => {
         setTimeout(() => {
-            // === NEW: Say "Say stop when to finish" ===
             speak(startPrompt[selectedLanguage], selectedLanguage, () => {
                 setTimeout(proceedToMainUI, 800);
             });
@@ -249,40 +261,18 @@ nameRecognition.onerror = () => {
 };
 
 nameRecognition.onend = () => {
-    if (isListeningForName) {
+    // If we were listening for a name and it stopped without a result, restart
+    if (isListeningForName && !speakerName) {
         setTimeout(startNameListening, 500);
     }
 };
 
-function startNameListening() {
-    if (isListeningForName || speakerName) return;
-    nameRecognition.lang = selectedLanguage;
-    nameRecognition.start();
-    nameStatusDiv.textContent = nameStatus[selectedLanguage].ready;
-    isListeningForName = true;
-}
-
-function stopNameListening() {
-    nameRecognition.stop();
-    isListeningForName = false;
-}
-
-function proceedToMainUI() {
-    speakerInfo.textContent = `Speaker: ${speakerName}`;
-    languageInfo.textContent = `Language: ${langMap[selectedLanguage]}`;
-    nameSection.classList.add('hidden');
-    mainSection.classList.remove('hidden');
-    loadSavedTranscripts();
-    setTimeout(() => {
-        statusDiv.textContent = `Say "stop" to finish and save.`;
-    }, 500);
-}
-
-/* Optional manual submit (fallback) */
+/* ---- MANUAL FALLBACK ---- */
 $('#submit-name').addEventListener('click', () => {
     const input = $('#speaker-name').value.trim();
     if (!input) return alert("Please enter your name");
     speakerName = input;
+    manualNameInput.classList.add('hidden');
     speak(helloMsg[selectedLanguage](speakerName), selectedLanguage, () => {
         setTimeout(() => {
             speak(startPrompt[selectedLanguage], selectedLanguage, () => {
@@ -296,7 +286,19 @@ $('#speaker-name').addEventListener('keypress', e => {
 });
 
 /* ==============================================================
-   MAIN LISTENING + AUTO-SAVE FULL TEXT ON "STOP"
+   MAIN UI
+   ============================================================== */
+function proceedToMainUI() {
+    speakerInfo.textContent = `Speaker: ${speakerName}`;
+    languageInfo.textContent = `Language: ${langMap[selectedLanguage]}`;
+    nameSection.classList.add('hidden');
+    mainSection.classList.remove('hidden');
+    loadSavedTranscripts();
+    statusDiv.textContent = `Say "stop" to finish and save.`;
+}
+
+/* ==============================================================
+   MAIN LISTENING + AUTO-SAVE
    ============================================================== */
 $('#start-btn').addEventListener('click', startListening);
 $('#stop-btn').addEventListener('click', stopListening);
@@ -335,9 +337,7 @@ recognition.onend = () => {
     if (isListening) recognition.start();
 };
 
-/* ==============================================================
-   LISTENING CONTROL
-   ============================================================== */
+/* ---- LISTENING CONTROL ---- */
 function startListening() {
     if (isListening) return;
     recognition.lang = selectedLanguage;
@@ -369,7 +369,7 @@ function stopListening() {
 }
 
 /* ==============================================================
-   VISUALIZER + FULL TEXT STORAGE
+   VISUALIZER + STORAGE
    ============================================================== */
 function animateBars() {
     if (!isListening) return;
@@ -380,7 +380,7 @@ function animateBars() {
 function saveTranscript(key, text) {
     const store = JSON.parse(localStorage.getItem('sgxTranscripts') || '{}');
     store[key] = text;
-    fullTranscripts[key] = text; // Keep full text
+    fullTranscripts[key] = text;
     localStorage.setItem('sgxTranscripts', JSON.stringify(store));
     loadSavedTranscripts();
 }
@@ -404,7 +404,7 @@ function loadSavedTranscripts() {
             const del = document.createElement('button');
             del.className = 'delete-btn';
             del.textContent = 'Delete';
-            del.onclick = (e) => { e.stopPropagation(); deleteTranscript(k); };
+            del.onclick = e => { e.stopPropagation(); deleteTranscript(k); };
             header.append(name, del);
 
             const content = document.createElement('div');
@@ -421,13 +421,13 @@ function loadSavedTranscripts() {
 
 function toggleTranscript(item, key) {
     const content = item.querySelector('.transcript-content');
-    const fullText = JSON.parse(localStorage.getItem('sgxTranscripts'))[key];
+    const full = JSON.parse(localStorage.getItem('sgxTranscripts'))[key];
     if (content.classList.contains('expanded')) {
         content.classList.remove('expanded');
-        content.textContent = fullText.length > 120 ? fullText.slice(0, 120) + '...' : fullText;
+        content.textContent = full.length > 120 ? full.slice(0, 120) + '...' : full;
     } else {
         content.classList.add('expanded');
-        content.textContent = fullText;
+        content.textContent = full;
     }
 }
 
@@ -472,7 +472,7 @@ function updateAllTexts() {
 }
 
 function speak(text, lang, onEnd) {
-    if (!('speechSynthesis' in window)) return onEnd?.();
+    if (!('speechSynthesis' in window)) { onEnd?.(); return; }
     const ut = new SpeechSynthesisUtterance(text);
     ut.lang = lang;
     ut.rate = 0.9;
