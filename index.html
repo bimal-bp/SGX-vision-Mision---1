@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Multilingual Speech to Text – SGX Minerals</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 /* ---- ALL YOUR ORIGINAL STYLES (unchanged) ---- */
 * {margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;}
@@ -65,7 +66,6 @@ button:disabled {opacity:.6;cursor:not-allowed;transform:none;box-shadow:none;}
         <h1>Multilingual Speech to Text</h1>
         <p class="subtitle">Speak in English or Hindi – real-time transcription</p>
     </header>
-
     <!-- ==== LANGUAGE SELECTION ==== -->
     <div class="language-section" id="language-section">
         <h2>Choose Your Language</h2>
@@ -75,41 +75,33 @@ button:disabled {opacity:.6;cursor:not-allowed;transform:none;box-shadow:none;}
             <button class="lang-btn" data-lang="hi-IN">Hindi</button>
         </div>
     </div>
-
     <!-- ==== NAME SECTION ==== -->
     <div class="name-section hidden" id="name-section">
         <h2 id="name-prompt">Please tell us your name</h2>
         <p id="name-instruction">We'll use this to save your transcripts</p>
-
         <div class="audio-prompt" id="audio-prompt">
             <h4 id="speak-name-title">Speak Your Name</h4>
             <p id="audio-instruction">Listening for your name...</p>
             <div class="status" id="name-status">Ready to listen...</div>
         </div>
-
         <!-- Fallback manual input -->
         <div class="name-input hidden" id="manual-name-input">
             <input type="text" id="speaker-name" placeholder="Enter your name">
             <button id="submit-name">Submit Name</button>
         </div>
     </div>
-
     <!-- ==== MAIN UI ==== -->
     <div id="main-section" class="hidden">
         <div class="speaker-info" id="speaker-info"></div>
         <div class="language-info" id="language-info"></div>
-
         <div class="controls">
             <button id="start-btn">Start Listening</button>
             <button id="stop-btn" disabled>Stop Listening</button>
             <button id="translate-btn">Translate Text</button>
             <button id="clear-btn">Clear Text</button>
         </div>
-
         <div class="status" id="status">Press “Start Listening” to begin</div>
-
         <div class="visualizer" id="visualizer"></div>
-
         <div class="output-container">
             <div id="transcript">Your transcribed text will appear here...</div>
             <div class="translated-text hidden" id="translated-text">
@@ -117,41 +109,34 @@ button:disabled {opacity:.6;cursor:not-allowed;transform:none;box-shadow:none;}
                 <div id="translation-result"></div>
             </div>
         </div>
-
         <div class="saved-transcripts">
             <h3>Saved Transcripts</h3>
             <div class="transcript-list" id="transcript-list"></div>
         </div>
     </div>
 </div>
-
 <script>
 /* ==============================================================
    GLOBAL VARIABLES & HELPERS
    ============================================================== */
 const $ = s => document.querySelector(s);
 const $$ = s => document.querySelectorAll(s);
-
 let speakerName = '';
 let selectedLanguage = 'en-US';
 let isListening = false;
 let isListeningForName = false;
-
 /* ---- FULL TRANSCRIPT ACCUMULATION ---- */
-let fullTranscript = '';    // All finalized text
-let currentInterim = '';    // Current interim text
-
+let fullTranscript = ''; // All finalized text
+let currentInterim = ''; // Current interim text
 const recognition = ('SpeechRecognition' in window) ? new SpeechRecognition() : new webkitSpeechRecognition();
 const nameRecognition = ('SpeechRecognition' in window) ? new SpeechRecognition() : new webkitSpeechRecognition();
-
 recognition.continuous = true;
 recognition.interimResults = true;
 nameRecognition.continuous = false;
 nameRecognition.interimResults = false;
-
 /* ---- LANGUAGE MAPS ---- */
 const langMap = { 'en-US':'English', 'hi-IN':'Hindi' };
-const welcomeMsg = { 
+const welcomeMsg = {
     'en-US':'Welcome to SGX Minerals. Please say your name now.',
     'hi-IN':'एसजीएक्स मिनरल्स में आपका स्वागत है। कृपया अपना नाम बोलें।'
 };
@@ -164,7 +149,7 @@ const startPrompt = {
     'hi-IN': 'जब समाप्त करना चाहें तो "stop" बोलें।'
 };
 const namePrompts = { 'en-US':'Please say your name', 'hi-IN':'अपना नाम बोलें' };
-const nameInstr  = { 'en-US':'We\'ll save your transcript with this name',
+const nameInstr = { 'en-US':'We\'ll save your transcript with this name',
                     'hi-IN':'हम इस नाम से आपका ट्रांसक्रिप्ट सहेजेंगे' };
 const nameStatus = {
     'en-US':{ready:'Listening for your name...', success:'Name captured!', error:'Could not hear name. Try again.'},
@@ -176,20 +161,18 @@ const btnTexts = {
     translate:{'en-US':'Translate Text','hi-IN':'टेक्स्ट अनुवाद करें'},
     clear:{'en-US':'Clear Text','hi-IN':'टेक्स्ट साफ करें'}
 };
-
 /* ---- UI ELEMENTS ---- */
-const langBtns          = $$('.lang-btn');
-const nameSection       = $('#name-section');
-const mainSection       = $('#main-section');
-const speakerInfo       = $('#speaker-info');
-const languageInfo      = $('#language-info');
-const transcriptDiv     = $('#transcript');
-const statusDiv         = $('#status');
-const nameStatusDiv     = $('#name-status');
-const visualizer        = $('#visualizer');
-const transcriptList    = $('#transcript-list');
-const manualNameInput   = $('#manual-name-input');
-
+const langBtns = $$('.lang-btn');
+const nameSection = $('#name-section');
+const mainSection = $('#main-section');
+const speakerInfo = $('#speaker-info');
+const languageInfo = $('#language-info');
+const transcriptDiv = $('#transcript');
+const statusDiv = $('#status');
+const nameStatusDiv = $('#name-status');
+const visualizer = $('#visualizer');
+const transcriptList = $('#transcript-list');
+const manualNameInput = $('#manual-name-input');
 /* ---- VISUALIZER BARS ---- */
 for(let i=0;i<30;i++){
     const bar = document.createElement('div');
@@ -198,7 +181,6 @@ for(let i=0;i<30;i++){
     visualizer.appendChild(bar);
 }
 const bars = $$('.bar');
-
 /* ==============================================================
    LANGUAGE SELECTION → WELCOME → AUTO NAME LISTEN
    ============================================================== */
@@ -207,17 +189,13 @@ langBtns.forEach(btn => {
         langBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         selectedLanguage = btn.dataset.lang;
-
         recognition.lang = nameRecognition.lang = selectedLanguage;
-
         updateAllTexts();
         nameSection.classList.remove('hidden');
         mainSection.classList.add('hidden');
-
         speak(welcomeMsg[selectedLanguage], selectedLanguage, startNameListening);
     });
 });
-
 /* ==============================================================
    NAME CAPTURE (Speech Only)
    ============================================================== */
@@ -228,20 +206,16 @@ function startNameListening() {
     nameStatusDiv.textContent = nameStatus[selectedLanguage].ready;
     isListeningForName = true;
 }
-
 function stopNameListening() {
     nameRecognition.stop();
     isListeningForName = false;
 }
-
 nameRecognition.onresult = e => {
     const result = e.results[0][0].transcript.trim();
     if (result.length < 2) return;
-
     speakerName = result;
     nameStatusDiv.textContent = nameStatus[selectedLanguage].success;
     stopNameListening();
-
     speak(helloMsg[selectedLanguage](speakerName), selectedLanguage, () => {
         setTimeout(() => {
             speak(startPrompt[selectedLanguage], selectedLanguage, () => {
@@ -250,7 +224,6 @@ nameRecognition.onresult = e => {
         }, 600);
     });
 };
-
 nameRecognition.onerror = () => {
     nameStatusDiv.textContent = nameStatus[selectedLanguage].error;
     setTimeout(() => {
@@ -258,13 +231,11 @@ nameRecognition.onerror = () => {
         nameStatusDiv.textContent = "Type your name below:";
     }, 1500);
 };
-
 nameRecognition.onend = () => {
     if (isListeningForName && !speakerName) {
         setTimeout(startNameListening, 500);
     }
 };
-
 /* ---- MANUAL NAME FALLBACK ---- */
 $('#submit-name').addEventListener('click', () => {
     const input = $('#speaker-name').value.trim();
@@ -282,7 +253,6 @@ $('#submit-name').addEventListener('click', () => {
 $('#speaker-name').addEventListener('keypress', e => {
     if (e.key === 'Enter') $('#submit-name').click();
 });
-
 /* ==============================================================
    MAIN UI + AUTO-START LISTENING
    ============================================================== */
@@ -292,13 +262,11 @@ function proceedToMainUI() {
     nameSection.classList.add('hidden');
     mainSection.classList.remove('hidden');
     loadSavedTranscripts();
-
     // AUTO-START LISTENING
     setTimeout(() => {
         $('#start-btn').click();
     }, 600);
 }
-
 /* ==============================================================
    MAIN LISTENING + FULL TRANSCRIPT SAVE
    ============================================================== */
@@ -311,42 +279,33 @@ $('#clear-btn').addEventListener('click', () => {
     $('#translated-text').classList.add('hidden');
 });
 $('#translate-btn').addEventListener('click', translateText);
-
 /* ---- FULL TRANSCRIPT BUILDER ---- */
 recognition.onresult = e => {
-    let final = '';
-    let interim = '';
-
-    for (let i = e.resultIndex; i < e.results.length; i++) {
-        const t = e.results[i][0].transcript.trim();
-
+    currentInterim = '';
+    let new_text = '';
+    for (let i = e.resultIndex; i < e.results.length; ++i) {
+        const transcript_part = e.results[i][0].transcript;
+        new_text += transcript_part;
         if (e.results[i].isFinal) {
-            final += t + ' ';
-            fullTranscript += t + ' ';  // Accumulate every final word
+            fullTranscript += transcript_part;
         } else {
-            interim = t;
+            currentInterim += transcript_part;
         }
     }
-
-    const low = (final + interim).toLowerCase();
+    const low = new_text.toLowerCase();
     if (low.includes('stop') || low.includes('band karo')) {
         stopListening();
         return;
     }
-
-    currentInterim = interim;
-    transcriptDiv.innerHTML = fullTranscript + `<i style="color:#e74c3c">${interim}</i>`;
+    transcriptDiv.innerHTML = fullTranscript + `<i style="color:#e74c3c">${currentInterim}</i>`;
 };
-
 recognition.onerror = () => {
     statusDiv.textContent = 'Error occurred. Restarting...';
     setTimeout(startListening, 1000);
 };
-
 recognition.onend = () => {
     if (isListening) recognition.start();
 };
-
 /* ---- LISTENING CONTROL ---- */
 function startListening() {
     if (isListening) return;
@@ -361,16 +320,13 @@ function startListening() {
     isListening = true;
     animateBars();
 }
-
 function stopListening() {
     if (!isListening) return;
     recognition.stop();
     $('#start-btn').disabled = false;
     $('#stop-btn').disabled = true;
     isListening = false;
-
     const finalText = (fullTranscript + currentInterim).trim();
-
     if (finalText) {
         const ts = new Date().toLocaleString();
         const key = `${speakerName} - ${ts} (${langMap[selectedLanguage]})`;
@@ -379,11 +335,9 @@ function stopListening() {
     } else {
         statusDiv.textContent = 'Stopped. Nothing to save.';
     }
-
     fullTranscript = '';
     currentInterim = '';
 }
-
 /* ==============================================================
    VISUALIZER + STORAGE
    ============================================================== */
@@ -392,14 +346,26 @@ function animateBars() {
     bars.forEach(b => b.style.height = `${Math.random() * 70 + 5}px`);
     setTimeout(animateBars, 100);
 }
-
 function saveTranscript(key, text) {
     const store = JSON.parse(localStorage.getItem('sgxTranscripts') || '{}');
     store[key] = text;
     localStorage.setItem('sgxTranscripts', JSON.stringify(store));
     loadSavedTranscripts();
-}
 
+    // Generate and download PDF using jsPDF (local client-side tool, no server API needed)
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    doc.setFontSize(14);
+    doc.text(`Transcript for: ${key}`, 10, 10);
+    doc.setFontSize(12);
+    const lines = doc.splitTextToSize(text, 180); // Wrap long text
+    doc.text(lines, 10, 20);
+    // Add other stuff: e.g., footer with date and language
+    doc.setFontSize(10);
+    doc.text(`Generated by SGX Minerals Speech to Text App | Language: ${langMap[selectedLanguage]} | Date: ${new Date().toLocaleDateString()}`, 10, doc.internal.pageSize.height - 10);
+    const safeKey = key.replace(/[^a-zA-Z0-9_-]/g, '_'); // Sanitize filename
+    doc.save(`${safeKey}.pdf`);
+}
 function loadSavedTranscripts() {
     const store = JSON.parse(localStorage.getItem('sgxTranscripts') || '{}');
     transcriptList.innerHTML = '';
@@ -410,7 +376,6 @@ function loadSavedTranscripts() {
             const item = document.createElement('div');
             item.className = 'transcript-item';
             item.onclick = () => toggleTranscript(item, k);
-
             const header = document.createElement('div');
             header.className = 'transcript-header';
             const name = document.createElement('div');
@@ -421,19 +386,16 @@ function loadSavedTranscripts() {
             del.textContent = 'Delete';
             del.onclick = e => { e.stopPropagation(); deleteTranscript(k); };
             header.append(name, del);
-
             const content = document.createElement('div');
             content.className = 'transcript-content';
             const preview = v.length > 120 ? v.slice(0, 120) + '...' : v;
             content.textContent = preview;
-
             item.append(header, content);
             transcriptList.appendChild(item);
         }
     }
     if (!found) transcriptList.innerHTML = '<p>No saved transcripts yet.</p>';
 }
-
 function toggleTranscript(item, key) {
     const content = item.querySelector('.transcript-content');
     const full = JSON.parse(localStorage.getItem('sgxTranscripts'))[key];
@@ -445,7 +407,6 @@ function toggleTranscript(item, key) {
         content.textContent = full;
     }
 }
-
 function deleteTranscript(key) {
     if (!confirm(`Delete "${key}"?`)) return;
     const store = JSON.parse(localStorage.getItem('sgxTranscripts') || '{}');
@@ -453,7 +414,6 @@ function deleteTranscript(key) {
     localStorage.setItem('sgxTranscripts', JSON.stringify(store));
     loadSavedTranscripts();
 }
-
 /* ==============================================================
    TRANSLATION
    ============================================================== */
@@ -474,7 +434,6 @@ async function translateText() {
         statusDiv.textContent = 'Translation failed.';
     }
 }
-
 /* ==============================================================
    UTILS
    ============================================================== */
@@ -486,7 +445,6 @@ function updateAllTexts() {
     $('#translate-btn').textContent = btnTexts.translate[selectedLanguage];
     $('#clear-btn').textContent = btnTexts.clear[selectedLanguage];
 }
-
 function speak(text, lang, onEnd) {
     if (!('speechSynthesis' in window)) { onEnd?.(); return; }
     const ut = new SpeechSynthesisUtterance(text);
